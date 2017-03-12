@@ -1,2 +1,3 @@
 # Local gitignore rules
+/bin
 *.swp
