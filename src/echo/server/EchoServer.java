@@ -1,6 +1,8 @@
 package echo.server;
 
+import java.io.Closeable;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,27 +12,34 @@ import java.util.Scanner;
 /**
  * A simple server that will echo client inputs.
  */
-public class EchoServer {
+public class EchoServer implements Closeable {
 
 	public static int DEF_PORT = 4444;
 
 	private static String LOG_NEXT_CLIENT = "%s connected";
 	private static String LOG_READ_MESSAGE = "Read: %s";
-	private static String LOG_CLOSE_CLIENT = "Client closed";
+	private static String LOG_CLOSE_CLIENT = "Client disconnected";
+	private static String LOG_CLOSE = "Server disconnected";
+	private static String LOG_CONSTRUCTOR = "Listening at port";
 
 	private ServerSocket connection;
 	private Socket client;
 	private Scanner in;
-	private PrintWriter out;
+	private PrintStream out;
 
 	private boolean logEnabled;
 
-	public EchoServer () throws IOException {
-		this(DEF_PORT);
+	public EchoServer (boolean logEnabled) throws IOException {
+		this(DEF_PORT, logEnabled);
 	}
 
-	public EchoServer (int port) throws IOException {
+	public EchoServer (int port, boolean logEnabled) throws IOException {
 		connection = new ServerSocket(port);
+		this.logEnabled = logEnabled;
+
+		if (logEnabled) {
+			log(String.format("%s %d", LOG_CONSTRUCTOR, port));
+		}
 	}
 
 	public void setLogEnabled (boolean enabled) {
@@ -44,7 +53,7 @@ public class EchoServer {
 	public void nextClient () throws IOException {
 		client = connection.accept();
 		in = new Scanner(client.getInputStream());
-		out = new PrintWriter(client.getOutputStream());
+		out = new PrintStream(client.getOutputStream());
 
 		if (logEnabled) {
 			log(String.format(LOG_NEXT_CLIENT, client));
@@ -91,6 +100,17 @@ public class EchoServer {
 		}
 	}
 
+	public void close () throws IOException {
+		if (client != null && !client.isClosed()) {
+			closeClient();
+		}
+		connection.close();
+
+		if (logEnabled) {
+			log(LOG_CLOSE);
+		}
+	}
+
 	private void log (String output) {
 		System.out.format(
 				"[%s] %s\n", new Date(System.currentTimeMillis()), String.valueOf(output)
@@ -108,12 +128,10 @@ public class EchoServer {
 		String message;
 
 		if (args.length > 1) {
-			server = new EchoServer(parsePort(args[0]));
+			server = new EchoServer(parsePort(args[0]), true);
 		} else {
-			server = new EchoServer();
+			server = new EchoServer(true);
 		}
-
-		server.setLogEnabled(true);
 
 		while (true) {
 			server.nextClient();
