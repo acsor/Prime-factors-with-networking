@@ -1,4 +1,4 @@
-package echo.client;
+package primefactor;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
- * A simple client that will interact with an EchoServer.
+ * A simple primefactor that will interact with an BaseServer.
  */
 public class EchoClient implements Closeable {
 

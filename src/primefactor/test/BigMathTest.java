@@ -1,6 +1,8 @@
+package primefactor.test;
+
 import org.junit.Assert;
 import org.junit.Test;
-import util.BigMath;
+import primefactor.util.BigMath;
 
 import java.math.BigInteger;
 import java.util.List;

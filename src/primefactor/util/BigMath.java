@@ -1,4 +1,4 @@
-package util;
+package primefactor.util;
 
 import java.math.BigInteger;
 import java.util.LinkedList;

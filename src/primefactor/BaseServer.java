@@ -1,39 +1,32 @@
-package echo.server;
+package primefactor;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
 import java.util.Scanner;
 
 /**
- * A simple server that will echo client inputs.
+ * A base server class to be subclassed by more specialized types of servers.
  */
-public class EchoServer implements Closeable {
+public abstract class BaseServer implements Closeable {
 
-	public static int DEF_PORT = 4444;
+	protected static String LOG_NEXT_CLIENT = "%s connected";
+	protected static String LOG_READ_MESSAGE = "Read: %s";
+	protected static String LOG_CLOSE_CLIENT = "Client disconnected";
+	protected static String LOG_CLOSE = "Server disconnected";
+	protected static String LOG_CONSTRUCTOR = "Listening at port";
 
-	private static String LOG_NEXT_CLIENT = "%s connected";
-	private static String LOG_READ_MESSAGE = "Read: %s";
-	private static String LOG_CLOSE_CLIENT = "Client disconnected";
-	private static String LOG_CLOSE = "Server disconnected";
-	private static String LOG_CONSTRUCTOR = "Listening at port";
+	protected ServerSocket connection;
+	protected Socket client;
+	protected Scanner in;
+	protected PrintStream out;
 
-	private ServerSocket connection;
-	private Socket client;
-	private Scanner in;
-	private PrintStream out;
+	protected boolean logEnabled;
 
-	private boolean logEnabled;
-
-	public EchoServer (boolean logEnabled) throws IOException {
-		this(DEF_PORT, logEnabled);
-	}
-
-	public EchoServer (int port, boolean logEnabled) throws IOException {
+	public BaseServer (int port, boolean logEnabled) throws IOException {
 		connection = new ServerSocket(port);
 		this.logEnabled = logEnabled;
 
@@ -117,42 +110,11 @@ public class EchoServer implements Closeable {
 		);
 	}
 
-	/**
-	 * @param args String array containing Program arguments.  It should only
-	 *             contain at most one String indicating the port it should connect to.
-	 *             The String should be parseable into an int.
-	 *             If no arguments, we default to port 4444.
-	 */
-	public static void main (String[] args) throws IOException {
-		final EchoServer server;
-		String message;
-
-		if (args.length > 1) {
-			server = new EchoServer(parsePort(args[0]), true);
-		} else {
-			server = new EchoServer(true);
-		}
-
-		while (true) {
-			server.nextClient();
-
-			do {
-				message = server.readMessage();
-
-				if (message != null) {
-					server.writeMessage(message);
-				}
-			} while (message != null);
-
-			server.closeClient();
-		}
-	}
-
-	private static int parsePort (String stringPort) {
+	protected static int parsePort (String stringPort, int defaultPort) {
 		try {
 			return Integer.parseInt(stringPort);
 		} catch (NumberFormatException e) {
-			return DEF_PORT;
+			return defaultPort;
 		}
 	}
 
