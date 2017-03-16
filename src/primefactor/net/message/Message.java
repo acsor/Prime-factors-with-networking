@@ -1,4 +1,4 @@
-package primefactor;
+package primefactor.net.message;
 
 import java.io.Serializable;
 

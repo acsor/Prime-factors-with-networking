@@ -1,4 +1,4 @@
-package primefactor;
+package primefactor.net;
 
 import java.io.IOException;
 

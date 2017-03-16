@@ -1,5 +1,7 @@
-package primefactor;
+package primefactor.net;
 
+import primefactor.net.message.ClientToServerMessage;
+import primefactor.net.message.ServerToClientMessage;
 import primefactor.util.BigMath;
 
 import java.io.IOException;

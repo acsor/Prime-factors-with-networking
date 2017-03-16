@@ -1,5 +1,8 @@
-package primefactor;
+package primefactor.net;
 
+
+import primefactor.net.message.ClientToServerMessage;
+import primefactor.net.message.ClientToUserMessage;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
