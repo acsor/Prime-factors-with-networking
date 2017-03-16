@@ -27,7 +27,7 @@ public class EchoServer extends BaseServer {
 		final BaseServer server;
 		String message;
 
-		if (args.length > 1) {
+		if (args.length > 0) {
 			server = new EchoServer(parsePort(args[0], CONST_DEF_PORT), true);
 		} else {
 			server = new EchoServer(true);
