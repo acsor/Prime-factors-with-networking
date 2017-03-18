@@ -2,11 +2,9 @@ package primefactor.net;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
-import java.util.Scanner;
 
 /**
  * A base server class to be subclassed by more specialized types of servers.
@@ -21,8 +19,6 @@ public abstract class BaseServer implements Closeable {
 
 	protected ServerSocket connection;
 	protected Socket client;
-	protected Scanner in;
-	protected PrintStream out;
 
 	protected boolean logEnabled;
 
@@ -45,53 +41,27 @@ public abstract class BaseServer implements Closeable {
 
 	public void nextClient () throws IOException {
 		client = connection.accept();
-		in = new Scanner(client.getInputStream());
-		out = new PrintStream(client.getOutputStream());
+		onNextClient(client);
 
 		if (logEnabled) {
 			log(String.format(LOG_NEXT_CLIENT, client));
 		}
 	}
 
+	/**
+	 * Invoked as a callback method when a connection with a new client has been established.<br>
+	 * This method can be used to create input or output stream instances to communicate with the client.
+	 * @param client Socket instance associated with the client.
+	 */
+	protected abstract void onNextClient (final Socket client) throws IOException;
+
 	public Socket getClientSocket () {
 		return client;
 	}
 
-	public String readMessage () {
-		String result = null;
+	public abstract String readMessage ();
 
-		if (client.isConnected()) {
-			if (in.hasNextLine()) {
-				result = in.nextLine();
-			}
-		}
-
-		if (logEnabled) {
-			if (result != null) {
-				log(
-						String.format(LOG_READ_MESSAGE, result)
-				);
-			}
-		}
-
-		return result;
-	}
-
-	public boolean writeMessage (String message) {
-		out.println(message);
-
-		return out.checkError();
-	}
-
-	public void closeClient () throws IOException {
-		out.close();
-		in.close();
-		client.close();
-
-		if (logEnabled) {
-			log(LOG_CLOSE_CLIENT);
-		}
-	}
+	public abstract boolean writeMessage (String message);
 
 	public void close () throws IOException {
 		if (client != null && !client.isClosed()) {
@@ -104,7 +74,21 @@ public abstract class BaseServer implements Closeable {
 		}
 	}
 
-	private void log (String output) {
+	public void closeClient () throws IOException {
+		onCloseClient();
+		client.close();
+
+		if (logEnabled) {
+			log(LOG_CLOSE_CLIENT);
+		}
+	}
+
+	/**
+	 * Called right <i>before</i> the connection with a client is closed.
+	 */
+	protected abstract void onCloseClient() throws IOException;
+
+	protected void log (String output) {
 		System.out.format(
 				"[%s] %s\n", new Date(System.currentTimeMillis()), String.valueOf(output)
 		);

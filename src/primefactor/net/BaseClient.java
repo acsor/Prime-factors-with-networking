@@ -12,17 +12,13 @@ public abstract class BaseClient implements Closeable {
 
 	protected Socket connection;
 
-	protected Scanner serverIn;
-	protected PrintStream serverOut;
-
 	protected Scanner userIn;
 	protected PrintStream userOut;
 
 	public BaseClient (String server, int port) throws IOException {
 		connection = new Socket(server, port);
 
-		serverIn = new Scanner(connection.getInputStream());
-		serverOut = new PrintStream(connection.getOutputStream(), true);
+		onConnectServer(connection);
 
 		userIn = new Scanner(System.in);
 		userOut = System.out;
@@ -32,43 +28,22 @@ public abstract class BaseClient implements Closeable {
 
 	public abstract String filterUserInput (String input);
 
-	public String readServer () {
-		if (serverIn.hasNextLine()) {
-			return serverIn.nextLine();
-		}
-		return null;
-	}
+	public abstract String readServer ();
 
-	public boolean writeServer (String message) {
-		if (isUserInputValid(message)) {
-			serverOut.println(filterUserInput(message));
-		} else {
-			throw new IllegalArgumentException("Messages not adhering to the grammar can not be passed on to the server");
-		}
+	public abstract boolean writeServer (String message);
 
-		return serverOut.checkError();
-	}
+	protected abstract void onConnectServer (final Socket connection) throws IOException;
 
 	public String readUser () {
-		final String input;
-
 		if (userIn.hasNextLine()) {
-			input = userIn.nextLine();
-
-			if (isUserInputValid(input)) {
-				return filterUserInput(input);
-			}
+			return filterUserInput(userIn.nextLine());
 		}
 
 		return null;
 	}
 
 	public boolean writeUser (String message) {
-		if (isUserInputValid(message)) {
-			userOut.format("%s %s\n", CONST_PREFIX, filterUserInput(message));
-		} else {
-			throw new IllegalArgumentException("Messages not complying to the grammar can not be written to console");
-		}
+		userOut.println(String.valueOf(message));
 
 		return userOut.checkError();
 	}
@@ -76,11 +51,11 @@ public abstract class BaseClient implements Closeable {
 	public void close () throws IOException {
 		userOut.close();
 		userIn.close();
-
-		serverOut.close();
-		serverIn.close();
+		onCloseServer();
 
 		connection.close();
 	}
+
+	protected abstract void onCloseServer() throws IOException;
 
 }

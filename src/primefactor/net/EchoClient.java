@@ -1,11 +1,17 @@
 package primefactor.net;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * A simple echo client that will interact with an EchoServer.
  */
 public class EchoClient extends BaseClient {
+
+	protected Scanner serverIn;
+	protected PrintStream serverOut;
 
 	public EchoClient (String server, int port) throws IOException {
 		super(server, port);
@@ -25,6 +31,37 @@ public class EchoClient extends BaseClient {
 		return input.replaceAll("\\n", "");
 	}
 
+	@Override
+	public String readServer () {
+		if (serverIn.hasNextLine()) {
+			return serverIn.nextLine();
+		}
+		return null;
+	}
+
+	@Override
+	public boolean writeServer (String message) {
+		serverOut.println(String.valueOf(message));
+
+		return serverOut.checkError();
+	}
+
+	@Override
+	protected void onConnectServer (Socket connection) throws IOException {
+		serverIn = new Scanner(connection.getInputStream());
+		serverOut = new PrintStream(connection.getOutputStream(), true);
+	}
+
+	@Override
+	protected void onCloseServer () throws IOException {
+		if (serverIn != null) {
+			serverIn.close();
+		}
+		if (serverOut != null) {
+			serverOut.close();
+		}
+	}
+
 	/**
 	 * @param args String array containing Program arguments.  It should only
 	 *             contain exactly one String indicating which server to connect to.
@@ -40,7 +77,7 @@ public class EchoClient extends BaseClient {
 			do {
 				consoleIn = client.readUser();
 
-				if (consoleIn != null) {
+				if (consoleIn != null && client.isUserInputValid(consoleIn)) {
 					client.writeServer(consoleIn);
 
 					networkIn = client.readServer();

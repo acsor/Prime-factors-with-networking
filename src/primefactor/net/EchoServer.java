@@ -1,6 +1,9 @@
 package primefactor.net;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * Created by n0ne on 13/03/17.
@@ -9,12 +12,55 @@ public class EchoServer extends BaseServer {
 
 	public static int CONST_DEF_PORT = 4444;
 
+	protected Scanner in;
+	protected PrintStream out;
+
 	public EchoServer (boolean logEnabled) throws IOException {
 		this(CONST_DEF_PORT, logEnabled);
 	}
 
 	public EchoServer (int port, boolean logEnabled) throws IOException {
 		super(port, logEnabled);
+	}
+
+	@Override
+	public String readMessage () {
+		String result = null;
+
+		if (client.isConnected()) {
+			if (in.hasNextLine()) {
+				result = in.nextLine();
+			}
+		}
+
+		if (logEnabled) {
+			if (result != null) {
+				log(
+						String.format(LOG_READ_MESSAGE, result)
+				);
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public boolean writeMessage (String message) {
+		out.println(message);
+
+		return out.checkError();
+	}
+
+	@Override
+	protected void onNextClient (final Socket client) throws IOException {
+		in = new Scanner(client.getInputStream());
+		out = new PrintStream(client.getOutputStream());
+	}
+
+	@Override
+	protected void onCloseClient () {
+		out.close();
+		in.close();
 	}
 
 	/**

@@ -4,10 +4,9 @@ import primefactor.net.message.ClientToServerMessage;
 import primefactor.net.message.ServerToClientMessage;
 import primefactor.util.BigMath;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.math.BigInteger;
+import java.net.Socket;
 import java.util.List;
 
 /**
@@ -32,6 +31,9 @@ public class PrimeFactorsServer extends BaseServer {
 	public static final BigInteger CONST_MIN_N = new BigInteger("2");
 	public static final BigInteger CONST_MIN_LOW_BOUND = new BigInteger("2");
 
+	private ObjectInputStream objectIn;
+	private ObjectOutputStream objectOut;
+
 	/**
 	 * Certainty variable for BigInteger isProbablePrime() function.
 	 */
@@ -45,14 +47,19 @@ public class PrimeFactorsServer extends BaseServer {
 		super(port, logEnabled);
 	}
 
-	public ClientToServerMessage readClientFactorMessage () throws IOException, ClassNotFoundException {
-		final ObjectInputStream objectIn = new ObjectInputStream(client.getInputStream());
+	@Override
+	protected void onNextClient (Socket client) throws IOException {
+		objectIn = new ObjectInputStream(new BufferedInputStream(client.getInputStream()));
+		objectOut = new ObjectOutputStream(new BufferedOutputStream(client.getOutputStream()));
+	}
 
-		try {
-			return (ClientToServerMessage) objectIn.readObject();
-		} finally {
-			objectIn.close();
-		}
+	@Override
+	public String readMessage () {
+		throw new UnsupportedOperationException();
+	}
+
+	public ClientToServerMessage readClientFactorMessage () throws IOException, ClassNotFoundException {
+		return (ClientToServerMessage) objectIn.readObject();
 	}
 
 	public boolean isClientToServerMessageValid (ClientToServerMessage message) {
@@ -64,13 +71,7 @@ public class PrimeFactorsServer extends BaseServer {
 	}
 
 	public void writeMessage (ServerToClientMessage message) throws IOException {
-		final ObjectOutputStream objectOut = new ObjectOutputStream(client.getOutputStream());
-
-		try {
-			objectOut.writeObject(message);
-		} finally {
-			objectOut.close();
-		}
+		objectOut.writeObject(message);
 	}
 
 	@Override
@@ -81,6 +82,12 @@ public class PrimeFactorsServer extends BaseServer {
 						PrimeFactorsServer.class.getSimpleName()
 				)
 		);
+	}
+
+	@Override
+	protected void onCloseClient () throws IOException {
+		objectIn.close();
+		objectOut.close();
 	}
 
 	/**
@@ -109,6 +116,9 @@ public class PrimeFactorsServer extends BaseServer {
 					inMessage = server.readClientFactorMessage();
 					isMessageValid = server.isClientToServerMessageValid(inMessage);
 				} catch (ClassNotFoundException e) {
+					server.writeMessage(
+							new ServerToClientMessage.InvalidMessage()
+					);
 					isMessageValid = false;
 				}
 			} while (!isMessageValid);
@@ -119,7 +129,7 @@ public class PrimeFactorsServer extends BaseServer {
 					inMessage.getLowBound()
 			);
 
-			for (BigInteger prime: primes) {
+			for (BigInteger prime : primes) {
 				outMessage = new ServerToClientMessage.FoundMessage(
 						inMessage.getN(),
 						prime
