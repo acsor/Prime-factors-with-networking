@@ -24,7 +24,7 @@ public abstract class BaseClient implements Closeable {
 		userOut = System.out;
 	}
 
-	public abstract boolean isUserInputValid (String input);
+	public abstract boolean isFilteredUserInputValid (String input);
 
 	public abstract String filterUserInput (String input);
 
@@ -34,12 +34,22 @@ public abstract class BaseClient implements Closeable {
 
 	protected abstract void onConnectServer (final Socket connection) throws IOException;
 
-	public String readUser () {
+	public final String readUserRaw () {
 		if (userIn.hasNextLine()) {
-			return filterUserInput(userIn.nextLine());
+			return userIn.nextLine();
 		}
 
 		return null;
+	}
+
+	public final String readUserFiltered () {
+		String result = readUserRaw();
+
+		if (result != null) {
+			result = filterUserInput(result);
+		}
+
+		return result;
 	}
 
 	public boolean writeUser (String message) {

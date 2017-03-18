@@ -4,7 +4,6 @@ package primefactor.net;
 import primefactor.net.message.ClientToServerMessage;
 import primefactor.net.message.ClientToUserMessage;
 import primefactor.net.message.ServerToClientMessage;
-import primefactor.util.BigMath;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -70,7 +69,6 @@ public class PrimeFactorsClient extends BaseClient {
 	}
 
 	public boolean writeUserFactoringResult (ClientToUserMessage message) {
-		//TO-DO Test this method's code.
 		final StringBuilder b = new StringBuilder();
 		final List<BigInteger> factors = message.getFactors();
 
@@ -98,7 +96,7 @@ public class PrimeFactorsClient extends BaseClient {
 	}
 
 	@Override
-	public boolean isUserInputValid (String input) {
+	public boolean isFilteredUserInputValid (String input) {
 		final BigInteger product;
 
 		try {
@@ -150,19 +148,19 @@ public class PrimeFactorsClient extends BaseClient {
 
 			do { //Until the user inputs an end-of-stream character:
 				client.writeUser(CONST_USER_INPUT);
-				userInMessage = client.filterUserInput(client.readUser());
+				userInMessage = client.readUserFiltered();
 
-				if (userInMessage != null && client.isUserInputValid(userInMessage)) {
+				if (userInMessage != null && client.isFilteredUserInputValid(userInMessage)) {
 					serverOutMessage = new ClientToServerMessage(
 							new BigInteger(userInMessage),
 							CONST_MIN_LOW_BOUND,
-							BigMath.sqrt(new BigInteger(userInMessage))
+							new BigInteger(userInMessage).subtract(BigInteger.ONE)
 					);
 					client.writeServer(serverOutMessage);
+					userOutMessage = new ClientToUserMessage(new BigInteger(userInMessage));
 
 					do { //Until the server responds with an "invalid message" or "done message":
 						serverInMessage = client.readServerToClientMessage();
-						userOutMessage = new ClientToUserMessage(new BigInteger(userInMessage));
 
 						if (serverInMessage instanceof ServerToClientMessage.InvalidMessage) {
 							client.writeUserInvalid();

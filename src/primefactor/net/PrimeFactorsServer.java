@@ -97,7 +97,7 @@ public class PrimeFactorsServer extends BaseServer {
 		ClientToServerMessage inMessage = null;
 		ServerToClientMessage outMessage;
 		List<BigInteger> primes;
-		boolean isMessageValid;
+		boolean isClientMessageValid;
 
 		if (args.length > 0) {
 			server = new PrimeFactorsServer(parsePort(args[0], CONST_DEF_PORT), true);
@@ -111,36 +111,42 @@ public class PrimeFactorsServer extends BaseServer {
 			do {
 				try {
 					inMessage = server.readClientFactorMessage();
-					isMessageValid = server.isClientToServerMessageValid(inMessage);
+					isClientMessageValid = server.isClientToServerMessageValid(inMessage);
 				} catch (ClassNotFoundException e) {
 					server.writeMessage(
 							new ServerToClientMessage.InvalidMessage()
 					);
-					isMessageValid = false;
+					isClientMessageValid = false;
+				} catch (EOFException e) {
+					isClientMessageValid = false;
+					break;
 				}
-			} while (!isMessageValid);
+			} while (!isClientMessageValid);
 
-			primes = BigMath.primeFactorsOf(
-					inMessage.getN(),
-					inMessage.getLowBound(),
-					inMessage.getHighBound()
-			);
-
-			for (BigInteger prime : primes) {
-				outMessage = new ServerToClientMessage.FoundMessage(
+			if (isClientMessageValid) {
+				primes = BigMath.primeFactorsOf(
 						inMessage.getN(),
-						prime
+						inMessage.getLowBound(),
+						inMessage.getHighBound()
+				);
+
+				for (BigInteger prime: primes) {
+					outMessage = new ServerToClientMessage.FoundMessage(
+							inMessage.getN(),
+							prime
+					);
+					server.writeMessage(outMessage);
+				}
+
+				outMessage = new ServerToClientMessage.DoneMessage(
+						inMessage.getN(),
+						inMessage.getLowBound(),
+						inMessage.getHighBound()
 				);
 				server.writeMessage(outMessage);
 			}
 
-			outMessage = new ServerToClientMessage.DoneMessage(
-					inMessage.getN(),
-					inMessage.getLowBound(),
-					inMessage.getHighBound()
-			);
-			server.writeMessage(outMessage);
-
+			//TO-DO The line below and few others contain a serious bug. Fix it.
 			server.closeClient();
 		}
 	}

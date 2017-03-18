@@ -46,7 +46,7 @@ public class BigMath {
 			);
 		}
 
-		for (BigInteger divisor = low; divisor.compareTo(high) < 1; divisor = divisor.add(BigInteger.ONE)) {
+		for (BigInteger divisor = low; divisor.compareTo(high) < 1 && n.compareTo(BigInteger.ONE) >= 1; divisor = divisor.add(BigInteger.ONE)) {
 			if (divisor.isProbablePrime(100)) {
 				while (n.remainder(divisor).compareTo(BigInteger.ZERO) == 0) {
 					n = n.divide(divisor);

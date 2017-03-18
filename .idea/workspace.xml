@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a3a9464-192a-4e30-be66-9ff57bd5d516" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/primefactor/net/PrimeFactorsClient.java" afterPath="$PROJECT_DIR$/src/primefactor/net/PrimeFactorsClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/primefactor/net/PrimeFactorsServer.java" afterPath="$PROJECT_DIR$/src/primefactor/net/PrimeFactorsServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/primefactor/net/message/Message.java" afterPath="$PROJECT_DIR$/src/primefactor/net/message/Message.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/primefactor/net/BaseClient.java" afterPath="$PROJECT_DIR$/src/primefactor/net/BaseClient.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,42 +22,43 @@
       <file leaf-file-name="BaseClient.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/primefactor/net/BaseClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="45" column="48" lean-forward="false" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
+            <state relative-caret-position="432">
+              <caret line="24" column="4" lean-forward="false" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#BaseClient#0;class#BaseClient#0" expanded="true" />
-                <element signature="method#readUser#0;class#BaseClient#0" expanded="true" />
+                <element signature="method#readUserRaw#0;class#BaseClient#0" expanded="true" />
+                <element signature="method#readUserFiltered#0;class#BaseClient#0" expanded="true" />
+                <element signature="method#writeUser#0;class#BaseClient#0" expanded="true" />
                 <element signature="method#close#0;class#BaseClient#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrimeFactorsServer.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PrimeFactorsServer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/primefactor/net/PrimeFactorsServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="59" column="4" lean-forward="false" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
+            <state relative-caret-position="785">
+              <caret line="148" column="67" lean-forward="false" selection-start-line="148" selection-start-column="67" selection-end-line="148" selection-end-column="67" />
               <folding>
                 <element signature="docComment;field#CONST_PRIME_CERTAINTY#0;class#PrimeFactorsServer#0" expanded="true" />
                 <element signature="method#PrimeFactorsServer#0;class#PrimeFactorsServer#0" expanded="true" />
                 <element signature="method#PrimeFactorsServer#1;class#PrimeFactorsServer#0" expanded="true" />
+                <element signature="method#readClientFactorMessage#0;class#PrimeFactorsServer#0" expanded="true" />
                 <element signature="method#isClientToServerMessageValid#0;class#PrimeFactorsServer#0" expanded="true" />
                 <element signature="method#writeMessage#0;class#PrimeFactorsServer#0" expanded="true" />
                 <element signature="method#writeMessage#1;class#PrimeFactorsServer#0" expanded="true" />
                 <element signature="docComment;method#main#0;class#PrimeFactorsServer#0" expanded="true" />
-                <element signature="method#main#0;class#PrimeFactorsServer#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrimeFactorsClient.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PrimeFactorsClient.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/primefactor/net/PrimeFactorsClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="1646">
+              <caret line="188" column="0" lean-forward="false" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;class#PrimeFactorsClient#0" expanded="true" />
@@ -66,6 +66,10 @@
                 <element signature="method#clientFactory#0;class#PrimeFactorsClient#0" expanded="true" />
                 <element signature="method#readServerToClientMessage#0;class#PrimeFactorsClient#0" expanded="true" />
                 <element signature="method#writeServer#0;class#PrimeFactorsClient#0" expanded="true" />
+                <element signature="method#writeUserFactoringResult#0;class#PrimeFactorsClient#0" expanded="true" />
+                <element signature="method#isFilteredUserInputValid#0;class#PrimeFactorsClient#0" expanded="true" />
+                <element signature="e#3508#3509#0" expanded="true" />
+                <element signature="e#3550#3551#0" expanded="true" />
                 <element signature="docComment;method#main#0;class#PrimeFactorsClient#0" expanded="true" />
                 <element signature="method#main#0;class#PrimeFactorsClient#0" expanded="true" />
               </folding>
@@ -73,45 +77,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BigMath.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/primefactor/util/BigMath.java">
+      <file leaf-file-name="Message.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/primefactor/net/message/Message.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="263">
-              <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding>
-                <element signature="docComment;method#sqrt#0;class#BigMath#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaseServer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/primefactor/net/BaseServer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="docComment;class#BaseServer#0" expanded="true" />
-                <element signature="method#BaseServer#0;class#BaseServer#0" expanded="true" />
-                <element signature="docComment;method#onNextClient#0;class#BaseServer#0" expanded="true" />
-                <element signature="method#close#0;class#BaseServer#0" expanded="true" />
-                <element signature="method#closeClient#0;class#BaseServer#0" expanded="true" />
-                <element signature="method#log#0;class#BaseServer#0" expanded="true" />
-                <element signature="method#parsePort#0;class#BaseServer#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientToServerMessage.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/primefactor/net/message/ClientToServerMessage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="14" column="11" lean-forward="false" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
-              <folding>
-                <element signature="method#ClientToServerMessage#0;class#ClientToServerMessage#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="90">
+              <caret line="7" column="30" lean-forward="false" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -165,11 +136,12 @@
         <option value="$PROJECT_DIR$/src/primefactor/net/message/ClientToUserMessage.java" />
         <option value="$PROJECT_DIR$/src/primefactor/net/EchoServer.java" />
         <option value="$PROJECT_DIR$/src/primefactor/net/BaseServer.java" />
-        <option value="$PROJECT_DIR$/src/primefactor/net/BaseClient.java" />
         <option value="$PROJECT_DIR$/src/primefactor/net/EchoClient.java" />
         <option value="$PROJECT_DIR$/src/primefactor/net/message/Message.java" />
-        <option value="$PROJECT_DIR$/src/primefactor/net/PrimeFactorsServer.java" />
+        <option value="$PROJECT_DIR$/src/primefactor/util/BigMath.java" />
         <option value="$PROJECT_DIR$/src/primefactor/net/PrimeFactorsClient.java" />
+        <option value="$PROJECT_DIR$/src/primefactor/net/PrimeFactorsServer.java" />
+        <option value="$PROJECT_DIR$/src/primefactor/net/BaseClient.java" />
       </list>
     </option>
   </component>
@@ -372,6 +344,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="primefactor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -846,7 +822,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39957035" sideWeight="0.5132812" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35859376" sideWeight="0.52416754" order="1" side_tool="true" content_ui="tabs" x="104" y="109" width="1166" height="541" />
       <window_info id="Maven Projects" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.66814816" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6680988" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41460794" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.66487646" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -895,17 +871,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/primefactor/util/BigMath.java</url>
-          <line>39</line>
-          <properties />
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="26" />
+      <option name="time" value="30" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="n.remainder(divisor).compareTo(BigInteger.ZERO)" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -920,11 +892,11 @@
             <element signature="docComment;field#CONST_PRIME_CERTAINTY#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#PrimeFactorsServer#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#PrimeFactorsServer#1;class#PrimeFactorsServer#0" expanded="true" />
+            <element signature="method#readClientFactorMessage#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#isClientToServerMessageValid#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#writeMessage#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#writeMessage#1;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="docComment;method#main#0;class#PrimeFactorsServer#0" expanded="true" />
-            <element signature="method#main#0;class#PrimeFactorsServer#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -963,7 +935,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#BaseClient#0;class#BaseClient#0" expanded="true" />
-            <element signature="method#readUser#0;class#BaseClient#0" expanded="true" />
             <element signature="method#close#0;class#BaseClient#0" expanded="true" />
           </folding>
         </state>
@@ -1010,11 +981,11 @@
             <element signature="docComment;field#CONST_PRIME_CERTAINTY#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#PrimeFactorsServer#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#PrimeFactorsServer#1;class#PrimeFactorsServer#0" expanded="true" />
+            <element signature="method#readClientFactorMessage#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#isClientToServerMessageValid#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#writeMessage#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#writeMessage#1;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="docComment;method#main#0;class#PrimeFactorsServer#0" expanded="true" />
-            <element signature="method#main#0;class#PrimeFactorsServer#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1047,6 +1018,10 @@
             <element signature="method#clientFactory#0;class#PrimeFactorsClient#0" expanded="true" />
             <element signature="method#readServerToClientMessage#0;class#PrimeFactorsClient#0" expanded="true" />
             <element signature="method#writeServer#0;class#PrimeFactorsClient#0" expanded="true" />
+            <element signature="method#writeUserFactoringResult#0;class#PrimeFactorsClient#0" expanded="true" />
+            <element signature="method#isFilteredUserInputValid#0;class#PrimeFactorsClient#0" expanded="true" />
+            <element signature="e#3508#3509#0" expanded="true" />
+            <element signature="e#3550#3551#0" expanded="true" />
             <element signature="docComment;method#main#0;class#PrimeFactorsClient#0" expanded="true" />
             <element signature="method#main#0;class#PrimeFactorsClient#0" expanded="true" />
           </folding>
@@ -1060,7 +1035,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#BaseClient#0;class#BaseClient#0" expanded="true" />
-            <element signature="method#readUser#0;class#BaseClient#0" expanded="true" />
             <element signature="method#close#0;class#BaseClient#0" expanded="true" />
           </folding>
         </state>
@@ -1107,11 +1081,11 @@
             <element signature="docComment;field#CONST_PRIME_CERTAINTY#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#PrimeFactorsServer#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#PrimeFactorsServer#1;class#PrimeFactorsServer#0" expanded="true" />
+            <element signature="method#readClientFactorMessage#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#isClientToServerMessageValid#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#writeMessage#0;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="method#writeMessage#1;class#PrimeFactorsServer#0" expanded="true" />
             <element signature="docComment;method#main#0;class#PrimeFactorsServer#0" expanded="true" />
-            <element signature="method#main#0;class#PrimeFactorsServer#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1123,7 +1097,7 @@
           <folding>
             <element signature="imports" expanded="false" />
             <element signature="method#sqrt#0;class#BigMath#0" expanded="false" />
-            <element signature="method#primeFactorsOf#0;class#BigMath#0" expanded="false" />
+            <element signature="method#primeFactorsOf#0;class#BigMath#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1159,7 +1133,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#BaseClient#0;class#BaseClient#0" expanded="true" />
-            <element signature="method#readUser#0;class#BaseClient#0" expanded="true" />
             <element signature="method#close#0;class#BaseClient#0" expanded="true" />
           </folding>
         </state>
@@ -1196,7 +1169,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#BaseClient#0;class#BaseClient#0" expanded="true" />
-            <element signature="method#readUser#0;class#BaseClient#0" expanded="true" />
             <element signature="method#close#0;class#BaseClient#0" expanded="true" />
           </folding>
         </state>
@@ -1346,24 +1318,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/io/ObjectOutputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="341" column="22" lean-forward="false" selection-start-line="341" selection-start-column="22" selection-end-line="341" selection-end-column="22" />
-          <folding>
-            <element signature="method#writeObject#0;class#ObjectOutputStream#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/primefactor/net/message/ClientToUserMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="29" column="8" lean-forward="false" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/io/BufferedOutputStream.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -1433,6 +1387,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/io/ObjectInputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="852" column="0" lean-forward="false" selection-start-line="852" selection-start-column="0" selection-end-line="852" selection-end-column="0" />
+          <folding>
+            <element signature="method#ObjectInputStream#0;class#ObjectInputStream#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/primefactor/net/message/ClientToUserMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="28" column="19" lean-forward="false" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
+          <folding>
+            <element signature="e#627#628#0" expanded="true" />
+            <element signature="e#660#661#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/primefactor/net/BaseServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
@@ -1450,19 +1425,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/primefactor/net/BaseClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="45" column="48" lean-forward="false" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#BaseClient#0;class#BaseClient#0" expanded="true" />
-            <element signature="method#readUser#0;class#BaseClient#0" expanded="true" />
-            <element signature="method#close#0;class#BaseClient#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/primefactor/net/message/ClientToServerMessage.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -1473,13 +1435,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/io/ObjectInputStream.java">
+    <entry file="file://$PROJECT_DIR$/src/primefactor/util/BigMath.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="852" column="0" lean-forward="false" selection-start-line="852" selection-start-column="0" selection-end-line="852" selection-end-column="0" />
+        <state relative-caret-position="551">
+          <caret line="49" column="0" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
           <folding>
-            <element signature="method#ObjectInputStream#0;class#ObjectInputStream#0" expanded="true" />
+            <element signature="docComment;method#sqrt#0;class#BigMath#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/io/ObjectOutputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="350" column="0" lean-forward="false" selection-start-line="350" selection-start-column="0" selection-end-line="350" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1491,37 +1461,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/primefactor/util/BigMath.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding>
-            <element signature="docComment;method#sqrt#0;class#BigMath#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/primefactor/net/PrimeFactorsServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="59" column="4" lean-forward="false" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
-          <folding>
-            <element signature="docComment;field#CONST_PRIME_CERTAINTY#0;class#PrimeFactorsServer#0" expanded="true" />
-            <element signature="method#PrimeFactorsServer#0;class#PrimeFactorsServer#0" expanded="true" />
-            <element signature="method#PrimeFactorsServer#1;class#PrimeFactorsServer#0" expanded="true" />
-            <element signature="method#isClientToServerMessageValid#0;class#PrimeFactorsServer#0" expanded="true" />
-            <element signature="method#writeMessage#0;class#PrimeFactorsServer#0" expanded="true" />
-            <element signature="method#writeMessage#1;class#PrimeFactorsServer#0" expanded="true" />
-            <element signature="docComment;method#main#0;class#PrimeFactorsServer#0" expanded="true" />
-            <element signature="method#main#0;class#PrimeFactorsServer#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/primefactor/net/PrimeFactorsClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="1646">
+          <caret line="188" column="0" lean-forward="false" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;class#PrimeFactorsClient#0" expanded="true" />
@@ -1529,8 +1472,43 @@
             <element signature="method#clientFactory#0;class#PrimeFactorsClient#0" expanded="true" />
             <element signature="method#readServerToClientMessage#0;class#PrimeFactorsClient#0" expanded="true" />
             <element signature="method#writeServer#0;class#PrimeFactorsClient#0" expanded="true" />
+            <element signature="method#writeUserFactoringResult#0;class#PrimeFactorsClient#0" expanded="true" />
+            <element signature="method#isFilteredUserInputValid#0;class#PrimeFactorsClient#0" expanded="true" />
+            <element signature="e#3508#3509#0" expanded="true" />
+            <element signature="e#3550#3551#0" expanded="true" />
             <element signature="docComment;method#main#0;class#PrimeFactorsClient#0" expanded="true" />
             <element signature="method#main#0;class#PrimeFactorsClient#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/primefactor/net/BaseClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="24" column="4" lean-forward="false" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#readUserRaw#0;class#BaseClient#0" expanded="true" />
+            <element signature="method#readUserFiltered#0;class#BaseClient#0" expanded="true" />
+            <element signature="method#writeUser#0;class#BaseClient#0" expanded="true" />
+            <element signature="method#close#0;class#BaseClient#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/primefactor/net/PrimeFactorsServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="785">
+          <caret line="148" column="67" lean-forward="false" selection-start-line="148" selection-start-column="67" selection-end-line="148" selection-end-column="67" />
+          <folding>
+            <element signature="docComment;field#CONST_PRIME_CERTAINTY#0;class#PrimeFactorsServer#0" expanded="true" />
+            <element signature="method#PrimeFactorsServer#0;class#PrimeFactorsServer#0" expanded="true" />
+            <element signature="method#PrimeFactorsServer#1;class#PrimeFactorsServer#0" expanded="true" />
+            <element signature="method#readClientFactorMessage#0;class#PrimeFactorsServer#0" expanded="true" />
+            <element signature="method#isClientToServerMessageValid#0;class#PrimeFactorsServer#0" expanded="true" />
+            <element signature="method#writeMessage#0;class#PrimeFactorsServer#0" expanded="true" />
+            <element signature="method#writeMessage#1;class#PrimeFactorsServer#0" expanded="true" />
+            <element signature="docComment;method#main#0;class#PrimeFactorsServer#0" expanded="true" />
           </folding>
         </state>
       </provider>

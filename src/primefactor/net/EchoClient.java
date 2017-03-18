@@ -23,7 +23,7 @@ public class EchoClient extends BaseClient {
 		return new EchoClient(splitAddress[0], Integer.valueOf(splitAddress[1]));
 	}
 
-	public boolean isUserInputValid (String input) {
+	public boolean isFilteredUserInputValid (String input) {
 		return input != null && filterUserInput(input).length() > 0;
 	}
 
@@ -75,9 +75,9 @@ public class EchoClient extends BaseClient {
 			client = EchoClient.clientFactory(args[0]);
 
 			do {
-				consoleIn = client.readUser();
+				consoleIn = client.readUserRaw();
 
-				if (consoleIn != null && client.isUserInputValid(consoleIn)) {
+				if (consoleIn != null && client.isFilteredUserInputValid(consoleIn)) {
 					client.writeServer(consoleIn);
 
 					networkIn = client.readServer();
