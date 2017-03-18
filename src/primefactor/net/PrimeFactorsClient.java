@@ -40,9 +40,6 @@ public class PrimeFactorsClient extends BaseClient {
 
 	public static final String CONST_USER_INPUT = "Unsigned integer to factor: ";
 
-	private ObjectInputStream serverIn;
-	private ObjectOutputStream serverOut;
-
 	public PrimeFactorsClient (String server, int port) throws IOException {
 		super(server, port);
 	}
@@ -54,6 +51,7 @@ public class PrimeFactorsClient extends BaseClient {
 	}
 
 	public ServerToClientMessage readServerToClientMessage () throws IOException {
+		final ObjectInputStream serverIn = new ObjectInputStream(connection.getInputStream());
 		ServerToClientMessage result;
 
 		try {
@@ -66,6 +64,8 @@ public class PrimeFactorsClient extends BaseClient {
 	}
 
 	public void writeServer (ClientToServerMessage message) throws IOException {
+		final ObjectOutputStream serverOut = new ObjectOutputStream(connection.getOutputStream());
+
 		serverOut.writeObject(message);
 	}
 
@@ -127,14 +127,10 @@ public class PrimeFactorsClient extends BaseClient {
 
 	@Override
 	protected void onConnectServer (Socket connection) throws IOException {
-		serverIn = new ObjectInputStream(new BufferedInputStream(connection.getInputStream()));
-		serverOut = new ObjectOutputStream(new BufferedOutputStream(connection.getOutputStream()));
 	}
 
 	@Override
 	protected void onCloseServer () throws IOException {
-		serverIn.close();
-		serverOut.close();
 	}
 
 	/**
@@ -155,7 +151,6 @@ public class PrimeFactorsClient extends BaseClient {
 			do { //Until the user inputs an end-of-stream character:
 				client.writeUser(CONST_USER_INPUT);
 				userInMessage = client.filterUserInput(client.readUser());
-				client.writeUser("\n");
 
 				if (userInMessage != null && client.isUserInputValid(userInMessage)) {
 					serverOutMessage = new ClientToServerMessage(

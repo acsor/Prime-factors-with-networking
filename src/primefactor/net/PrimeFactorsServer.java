@@ -31,9 +31,6 @@ public class PrimeFactorsServer extends BaseServer {
 	public static final BigInteger CONST_MIN_N = new BigInteger("2");
 	public static final BigInteger CONST_MIN_LOW_BOUND = new BigInteger("2");
 
-	private ObjectInputStream objectIn;
-	private ObjectOutputStream objectOut;
-
 	/**
 	 * Certainty variable for BigInteger isProbablePrime() function.
 	 */
@@ -49,8 +46,6 @@ public class PrimeFactorsServer extends BaseServer {
 
 	@Override
 	protected void onNextClient (Socket client) throws IOException {
-		objectIn = new ObjectInputStream(new BufferedInputStream(client.getInputStream()));
-		objectOut = new ObjectOutputStream(new BufferedOutputStream(client.getOutputStream()));
 	}
 
 	@Override
@@ -59,7 +54,9 @@ public class PrimeFactorsServer extends BaseServer {
 	}
 
 	public ClientToServerMessage readClientFactorMessage () throws IOException, ClassNotFoundException {
-		return (ClientToServerMessage) objectIn.readObject();
+		final ObjectInputStream clientIn = new ObjectInputStream(client.getInputStream());
+
+		return (ClientToServerMessage) clientIn.readObject();
 	}
 
 	public boolean isClientToServerMessageValid (ClientToServerMessage message) {
@@ -71,7 +68,9 @@ public class PrimeFactorsServer extends BaseServer {
 	}
 
 	public void writeMessage (ServerToClientMessage message) throws IOException {
-		objectOut.writeObject(message);
+		final ObjectOutputStream clientOut = new ObjectOutputStream(client.getOutputStream());
+
+		clientOut.writeObject(message);
 	}
 
 	@Override
@@ -86,8 +85,6 @@ public class PrimeFactorsServer extends BaseServer {
 
 	@Override
 	protected void onCloseClient () throws IOException {
-		objectIn.close();
-		objectOut.close();
 	}
 
 	/**
@@ -125,8 +122,8 @@ public class PrimeFactorsServer extends BaseServer {
 
 			primes = BigMath.primeFactorsOf(
 					inMessage.getN(),
-					inMessage.getHighBound(),
-					inMessage.getLowBound()
+					inMessage.getLowBound(),
+					inMessage.getHighBound()
 			);
 
 			for (BigInteger prime : primes) {
