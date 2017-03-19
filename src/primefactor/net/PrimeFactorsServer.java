@@ -28,8 +28,6 @@ import java.util.List;
 public class PrimeFactorsServer extends BaseServer {
 
 	public static final int CONST_DEF_PORT = 4444;
-	public static final BigInteger CONST_MIN_N = new BigInteger("2");
-	public static final BigInteger CONST_MIN_LOW_BOUND = new BigInteger("2");
 
 	/**
 	 * Certainty variable for BigInteger isProbablePrime() function.
@@ -57,14 +55,6 @@ public class PrimeFactorsServer extends BaseServer {
 		final ObjectInputStream clientIn = new ObjectInputStream(client.getInputStream());
 
 		return (ClientToServerMessage) clientIn.readObject();
-	}
-
-	public boolean isClientToServerMessageValid (ClientToServerMessage message) {
-		return message.getN().compareTo(CONST_MIN_N) >= 0 &&
-				message.getLowBound().compareTo(CONST_MIN_LOW_BOUND) >= 0 &&
-				message.getHighBound().compareTo(message.getN()) < 0 &&
-				message.getLowBound().compareTo(message.getHighBound()) <= 0
-				;
 	}
 
 	public void writeMessage (ServerToClientMessage message) throws IOException {
@@ -111,7 +101,7 @@ public class PrimeFactorsServer extends BaseServer {
 			do {
 				try {
 					inMessage = server.readClientFactorMessage();
-					isClientMessageValid = server.isClientToServerMessageValid(inMessage);
+					isClientMessageValid = true;
 				} catch (ClassNotFoundException e) {
 					server.writeMessage(
 							new ServerToClientMessage.InvalidMessage()
@@ -119,7 +109,7 @@ public class PrimeFactorsServer extends BaseServer {
 					isClientMessageValid = false;
 				} catch (EOFException e) {
 					isClientMessageValid = false;
-					break;
+					break; //Break the do-while loop this catch statement is contained in.
 				}
 			} while (!isClientMessageValid);
 
@@ -146,7 +136,6 @@ public class PrimeFactorsServer extends BaseServer {
 				server.writeMessage(outMessage);
 			}
 
-			//TO-DO The line below and few others contain a serious bug. Fix it.
 			server.closeClient();
 		}
 	}

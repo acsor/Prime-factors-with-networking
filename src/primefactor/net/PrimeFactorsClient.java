@@ -1,14 +1,14 @@
 package primefactor.net;
 
-
 import primefactor.net.message.ClientToServerMessage;
 import primefactor.net.message.ClientToUserMessage;
 import primefactor.net.message.ServerToClientMessage;
+import primefactor.util.BigMath;
 
 import java.io.*;
 import java.math.BigInteger;
 import java.net.Socket;
-import java.util.List;
+import java.util.*;
 
 /**
  * PrimeFactorsClient class for PrimeFactorsServer.
@@ -26,7 +26,7 @@ import java.util.List;
  * Your primefactor should distribute to each server the appropriate range of values
  * to look for prime primefactor through.
  */
-public class PrimeFactorsClient extends BaseClient {
+public class PrimeFactorsClient {
 
 	public static final BigInteger CONST_INPUT_MIN_VALID = new BigInteger("2");
 	public static final BigInteger CONST_MIN_LOW_BOUND = new BigInteger("2");
@@ -37,20 +37,30 @@ public class PrimeFactorsClient extends BaseClient {
 	public static final String CONST_PROT_MULT = "*";
 	public static final String CONST_PROT_NEWLINE = "\n";
 
+	public static final String CONST_ADDRESS_SEP = ":";
 	public static final String CONST_USER_INPUT = "Unsigned integer to factor: ";
 
-	public PrimeFactorsClient (String server, int port) throws IOException {
-		super(server, port);
+	private List<Socket> servers;
+	private Scanner userIn;
+	private PrintStream userOut;
+
+	public PrimeFactorsClient (String... addresses) throws IOException {
+		String[] splitAddress;
+		servers = new LinkedList<>();
+
+		for (String address: addresses) {
+			splitAddress = address.split(CONST_ADDRESS_SEP);
+			servers.add(
+					new Socket(splitAddress[0], Integer.parseInt(splitAddress[1]))
+			);
+		}
+
+		userIn = new Scanner(System.in);
+		userOut = System.out;
 	}
 
-	public static PrimeFactorsClient clientFactory (String address) throws IOException {
-		final String[] splitAddress = address.split(":");
-
-		return new PrimeFactorsClient(splitAddress[0], Integer.valueOf(splitAddress[1]));
-	}
-
-	public ServerToClientMessage readServerToClientMessage () throws IOException {
-		final ObjectInputStream serverIn = new ObjectInputStream(connection.getInputStream());
+	public ServerToClientMessage readServerToClientMessage (int server) throws IOException {
+		final ObjectInputStream serverIn = new ObjectInputStream(servers.get(server).getInputStream());
 		ServerToClientMessage result;
 
 		try {
@@ -62,8 +72,8 @@ public class PrimeFactorsClient extends BaseClient {
 		return result;
 	}
 
-	public void writeServer (ClientToServerMessage message) throws IOException {
-		final ObjectOutputStream serverOut = new ObjectOutputStream(connection.getOutputStream());
+	public void writeClientToServerMessage (int server, ClientToServerMessage message) throws IOException {
+		final ObjectOutputStream serverOut = new ObjectOutputStream(servers.get(server).getOutputStream());
 
 		serverOut.writeObject(message);
 	}
@@ -91,11 +101,28 @@ public class PrimeFactorsClient extends BaseClient {
 		return writeUser(b.toString());
 	}
 
-	public boolean writeUserInvalid () {
-		return writeUser(CONST_PROT_INVALID);
+	public String readUserRaw () {
+		if (userIn.hasNextLine()) {
+			return userIn.nextLine();
+		}
+
+		return null;
 	}
 
-	@Override
+	public String readUserFiltered () {
+		String result = readUserRaw();
+
+		if (result != null) {
+			result = filterUserInput(result);
+		}
+
+		return result;
+	}
+
+	public String filterUserInput (String input) {
+		return input.replaceAll("\\s+", "");
+	}
+
 	public boolean isFilteredUserInputValid (String input) {
 		final BigInteger product;
 
@@ -108,27 +135,10 @@ public class PrimeFactorsClient extends BaseClient {
 		}
 	}
 
-	@Override
-	public String filterUserInput (String input) {
-		return input.replaceAll("\\s+", "");
-	}
+	public boolean writeUser (String message) {
+		userOut.println(String.valueOf(message));
 
-	@Override
-	public String readServer () {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean writeServer (String message) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void onConnectServer (Socket connection) throws IOException {
-	}
-
-	@Override
-	protected void onCloseServer () throws IOException {
+		return userOut.checkError();
 	}
 
 	/**
@@ -138,6 +148,7 @@ public class PrimeFactorsClient extends BaseClient {
 	 */
 	public static void main (String[] args) throws IOException {
 		final PrimeFactorsClient client;
+
 		ClientToServerMessage serverOutMessage;
 		ServerToClientMessage serverInMessage;
 		ClientToUserMessage userOutMessage;
@@ -146,7 +157,7 @@ public class PrimeFactorsClient extends BaseClient {
 		if (args.length > 0) {
 			client = PrimeFactorsClient.clientFactory(args[0]);
 
-			do { //Until the user inputs an end-of-stream character:
+			do {
 				client.writeUser(CONST_USER_INPUT);
 				userInMessage = client.readUserFiltered();
 
@@ -154,27 +165,10 @@ public class PrimeFactorsClient extends BaseClient {
 					serverOutMessage = new ClientToServerMessage(
 							new BigInteger(userInMessage),
 							CONST_MIN_LOW_BOUND,
-							new BigInteger(userInMessage).subtract(BigInteger.ONE)
+							BigMath.sqrt(new BigInteger(userInMessage).add(BigInteger.ONE))
 					);
-					client.writeServer(serverOutMessage);
 					userOutMessage = new ClientToUserMessage(new BigInteger(userInMessage));
-
-					do { //Until the server responds with an "invalid message" or "done message":
-						serverInMessage = client.readServerToClientMessage();
-
-						if (serverInMessage instanceof ServerToClientMessage.InvalidMessage) {
-							client.writeUserInvalid();
-							userOutMessage = null;
-						} else if (serverInMessage instanceof ServerToClientMessage.FoundMessage) {
-							userOutMessage.addFactor(
-									((ServerToClientMessage.FoundMessage) serverInMessage).getFactor()
-							);
-						}
-					} while (serverInMessage instanceof ServerToClientMessage.FoundMessage);
-
-					if (userOutMessage != null) {
-						client.writeUserFactoringResult(userOutMessage);
-					}
+					serverOutMessages = serverOutMessage.partition();
 				}
 			} while (userInMessage != null);
 
