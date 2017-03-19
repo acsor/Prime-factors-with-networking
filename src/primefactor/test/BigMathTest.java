@@ -15,6 +15,8 @@ public class BigMathTest {
 	@Test
 	public void testPrimeFactorsOf () {
 		final BigInteger[] products = {
+				new BigInteger("2"),
+				new BigInteger("44"),
 				new BigInteger("85"),
 				new BigInteger("264"),
 				new BigInteger("1331"),
@@ -24,6 +26,8 @@ public class BigMathTest {
 				new BigInteger("658073"),
 		};
 		final BigInteger[][] expectedResults = {
+				{new BigInteger("2")},
+				{new BigInteger("2"), new BigInteger("2"), new BigInteger("11")},
 				{new BigInteger("5"), new BigInteger("17")},
 				{new BigInteger("2"), new BigInteger("2"), new BigInteger("2"), new BigInteger("3"), new BigInteger("11")},
 				{new BigInteger("11"), new BigInteger("11"), new BigInteger("11")},
@@ -39,7 +43,7 @@ public class BigMathTest {
 			actualResult = BigMath.primeFactorsOf(
 					products[i],
 					new BigInteger("2"),
-					products[i].divide(new BigInteger("2"))
+					BigMath.sqrt(products[i]).add(BigInteger.ONE)
 			);
 
 			Assert.assertEquals(
