@@ -4,6 +4,7 @@ import primefactor.net.message.ClientToServerMessage;
 import primefactor.net.message.ClientToServerMessage.FactorMessage;
 import primefactor.net.message.ClientToUserMessage;
 import primefactor.net.message.ServerToClientMessage;
+import primefactor.net.message.UserToClientMessage;
 import primefactor.util.BigMath;
 
 import java.io.IOException;
@@ -33,8 +34,6 @@ import java.util.Scanner;
  * to look for prime primefactor through.
  */
 public class PrimeFactorsClient {
-
-	public static final BigInteger CONST_INPUT_MIN_VALID = new BigInteger("2");
 
 	public static final String CONST_ADDRESS_SEP = ":";
 	public static final String CONST_USER_INPUT = "Unsigned integer to factor: ";
@@ -88,32 +87,6 @@ public class PrimeFactorsClient {
 		return null;
 	}
 
-	public String readUserFiltered () {
-		String result = readUserRaw();
-
-		if (result != null) {
-			result = filterUserInput(result);
-		}
-
-		return result;
-	}
-
-	public String filterUserInput (String input) {
-		return input.replaceAll("\\s+", "");
-	}
-
-	public boolean isFilteredUserInputValid (String input) {
-		final BigInteger product;
-
-		try {
-			product = new BigInteger(input);
-
-			return product.compareTo(CONST_INPUT_MIN_VALID) >= 0;
-		} catch (NumberFormatException e) {
-			return false;
-		}
-	}
-
 	public boolean writeUser (String message) {
 		userOut.println(String.valueOf(message));
 
@@ -133,24 +106,22 @@ public class PrimeFactorsClient {
 		List<FactorMessage> serverOutMessages;
 		ServerToClientMessage.SpawnMessage serverInSpawnMessage;
 		ClientToUserMessage userOutMessage;
-		String userInMessage;
+		UserToClientMessage.FactorMessage userInMessage;
 
 		if (args.length > 0) {
 			client = PrimeFactorsClient.clientFactory(args[0]);
 
 			do {
 				client.writeUser(CONST_USER_INPUT);
-				//TO-DO The task of interpreting the user input and checking
-				//its validity may be incapsulated into a UserToClientMessage.
-				userInMessage = client.readUserFiltered();
+				userInMessage = UserToClientMessage.FactorMessage.factorMessageFactory(client.readUserRaw());
 
-				if (userInMessage != null && client.isFilteredUserInputValid(userInMessage)) {
+				if (userInMessage != null) {
 					serverOutMessage = new FactorMessage(
-							new BigInteger(userInMessage),
+							userInMessage.getN(),
 							FactorMessage.CONST_MIN_LOW_BOUND,
-							BigMath.sqrt(new BigInteger(userInMessage).add(BigInteger.ONE))
+							BigMath.sqrt(userInMessage.getN().add(BigInteger.ONE))
 					);
-					userOutMessage = new ClientToUserMessage(new BigInteger(userInMessage));
+					userOutMessage = new ClientToUserMessage(userInMessage.getN());
 					serverOutMessages = serverOutMessage.partition();
 					serverOutSpawnMessage = new ClientToServerMessage.SpawnMessage(serverOutMessages.size());
 
