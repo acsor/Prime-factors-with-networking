@@ -1,6 +1,6 @@
 package primefactor.net;
 
-import primefactor.net.message.ClientToServerMessage;
+import primefactor.net.message.ClientToServerFactorMessage;
 import primefactor.net.message.ClientToUserMessage;
 import primefactor.net.message.ServerToClientMessage;
 import primefactor.util.BigMath;
@@ -72,7 +72,7 @@ public class PrimeFactorsClient {
 		return result;
 	}
 
-	public void writeClientToServerMessage (int server, ClientToServerMessage message) throws IOException {
+	public void writeClientToServerMessage (int server, ClientToServerFactorMessage message) throws IOException {
 		final ObjectOutputStream serverOut = new ObjectOutputStream(servers.get(server).getOutputStream());
 
 		serverOut.writeObject(message);
@@ -149,7 +149,7 @@ public class PrimeFactorsClient {
 	public static void main (String[] args) throws IOException {
 		final PrimeFactorsClient client;
 
-		ClientToServerMessage serverOutMessage;
+		ClientToServerFactorMessage serverOutMessage;
 		ServerToClientMessage serverInMessage;
 		ClientToUserMessage userOutMessage;
 		String userInMessage;
@@ -162,7 +162,7 @@ public class PrimeFactorsClient {
 				userInMessage = client.readUserFiltered();
 
 				if (userInMessage != null && client.isFilteredUserInputValid(userInMessage)) {
-					serverOutMessage = new ClientToServerMessage(
+					serverOutMessage = new ClientToServerFactorMessage(
 							new BigInteger(userInMessage),
 							CONST_MIN_LOW_BOUND,
 							BigMath.sqrt(new BigInteger(userInMessage).add(BigInteger.ONE))

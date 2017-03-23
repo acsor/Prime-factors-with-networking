@@ -2,7 +2,7 @@ package primefactor.test;
 
 import org.junit.Assert;
 import org.junit.Test;
-import primefactor.net.message.ClientToServerMessage;
+import primefactor.net.message.ClientToServerFactorMessage;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -15,12 +15,12 @@ public class MessageTest {
 	@Test
 	public void testPartition () {
 		final BigInteger n = new BigInteger("2424234");
-		final ClientToServerMessage[] messages = {
-				new ClientToServerMessage(n, BigInteger.valueOf(2), BigInteger.valueOf(5)),
-				new ClientToServerMessage(n, BigInteger.valueOf(2), BigInteger.valueOf(43)),
-				new ClientToServerMessage(n, BigInteger.valueOf(2), BigInteger.valueOf(102)),
-				new ClientToServerMessage(n, BigInteger.valueOf(2), BigInteger.valueOf(92)),
-				new ClientToServerMessage(n, BigInteger.valueOf(2), BigInteger.valueOf(127)),
+		final ClientToServerFactorMessage[] messages = {
+				new ClientToServerFactorMessage(n, BigInteger.valueOf(2), BigInteger.valueOf(5)),
+				new ClientToServerFactorMessage(n, BigInteger.valueOf(2), BigInteger.valueOf(43)),
+				new ClientToServerFactorMessage(n, BigInteger.valueOf(2), BigInteger.valueOf(102)),
+				new ClientToServerFactorMessage(n, BigInteger.valueOf(2), BigInteger.valueOf(92)),
+				new ClientToServerFactorMessage(n, BigInteger.valueOf(2), BigInteger.valueOf(127)),
 		};
 		final int[] slots = {
 				3,
@@ -30,7 +30,7 @@ public class MessageTest {
 				6
 		};
 		final int cycles = Math.min(messages.length, slots.length);
-		List<ClientToServerMessage> partition;
+		List<ClientToServerFactorMessage> partition;
 
 		for (int i = 0; i < cycles; i++) {
 			partition = messages[i].partition(slots[i]);

@@ -1,10 +1,13 @@
 package primefactor.net;
 
-import primefactor.net.message.ClientToServerMessage;
+import primefactor.net.message.ClientToServerMessage.FactorMessage;
 import primefactor.net.message.ServerToClientMessage;
 import primefactor.util.BigMath;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.net.Socket;
 import java.util.List;
@@ -51,10 +54,10 @@ public class PrimeFactorsServer extends BaseServer {
 		throw new UnsupportedOperationException();
 	}
 
-	public ClientToServerMessage readClientFactorMessage () throws IOException, ClassNotFoundException {
+	public FactorMessage readClientFactorMessage () throws IOException, ClassNotFoundException {
 		final ObjectInputStream clientIn = new ObjectInputStream(client.getInputStream());
 
-		return (ClientToServerMessage) clientIn.readObject();
+		return (FactorMessage) clientIn.readObject();
 	}
 
 	public void writeMessage (ServerToClientMessage message) throws IOException {
@@ -84,7 +87,7 @@ public class PrimeFactorsServer extends BaseServer {
 	 */
 	public static void main (String[] args) throws IOException {
 		final PrimeFactorsServer server;
-		ClientToServerMessage inMessage = null;
+		FactorMessage inMessage = null;
 		ServerToClientMessage outMessage;
 		List<BigInteger> primes;
 		boolean isClientMessageValid;

@@ -96,4 +96,18 @@ public abstract class ServerToClientMessage extends Message {
 
 	}
 
+	public static class SpawnMessage extends ServerToClientMessage {
+
+		private int serverPort;
+
+		public SpawnMessage (int serverPort) {
+			this.serverPort = serverPort;
+		}
+
+		public int getServerPort () {
+			return serverPort;
+		}
+
+	}
+
 }

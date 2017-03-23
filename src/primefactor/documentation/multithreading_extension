@@ -1,0 +1,22 @@
+The last part of the problem set requires to use multi threading for factoring the
+numbers. The logic required for achieving this could be encapsulated within the main() methods
+of the client and server classes, but to keep things a bit more clean and neat, I'd prefer to
+add more structure to the project and extend the protocol for a one-to-many communication (one
+client to different servers).
+
+In this case, a given client C will decide, once started, into how many parts divide his integer,
+and will forward each partition of it to the dedicated server using most of the components implemented so far.
+Declaring how many working servers are needed is something the protocol isn't currently designed to do, so this will
+be one of the missing parts to design and implement. Further, the client isn't configured to handle a one-to-many
+communication, and no part of the PrimeFactorsServer (or of any other class) is capable of spawning such servers as
+are requested from a client.
+
+What written so far should fix what objectives I'm going to work toward.
+
+The extension will provide:
+    1. A client-to-server message (a SpawnMessage) encoding the number of servers required for factoring the number;
+    2. A server-to-client reply message (also called SpawnMessage, within another hierarchy) encoding the port a server
+    has been assigned;
+    3. A new server implementation (either within PrimeFactorServer, or a new class) with the aim of starting the
+    number of servers required;
+    4. An extension of the current PrimeFactorsClient class to allow connecting to a multiplicity of servers.
