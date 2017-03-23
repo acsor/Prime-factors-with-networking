@@ -1,14 +1,20 @@
 package primefactor.net;
 
-import primefactor.net.message.ClientToServerFactorMessage;
+import primefactor.net.message.ClientToServerMessage;
+import primefactor.net.message.ClientToServerMessage.FactorMessage;
 import primefactor.net.message.ClientToUserMessage;
 import primefactor.net.message.ServerToClientMessage;
 import primefactor.util.BigMath;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.math.BigInteger;
 import java.net.Socket;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * PrimeFactorsClient class for PrimeFactorsServer.
@@ -29,13 +35,6 @@ import java.util.*;
 public class PrimeFactorsClient {
 
 	public static final BigInteger CONST_INPUT_MIN_VALID = new BigInteger("2");
-	public static final BigInteger CONST_MIN_LOW_BOUND = new BigInteger("2");
-
-	public static final String CONST_PROT_INVALID = "invalid";
-	public static final String CONST_PROT_EQUALS = "=";
-	public static final String CONST_PROT_SPACE = " ";
-	public static final String CONST_PROT_MULT = "*";
-	public static final String CONST_PROT_NEWLINE = "\n";
 
 	public static final String CONST_ADDRESS_SEP = ":";
 	public static final String CONST_USER_INPUT = "Unsigned integer to factor: ";
@@ -61,44 +60,24 @@ public class PrimeFactorsClient {
 
 	public ServerToClientMessage readServerToClientMessage (int server) throws IOException {
 		final ObjectInputStream serverIn = new ObjectInputStream(servers.get(server).getInputStream());
-		ServerToClientMessage result;
 
 		try {
-			result = (ServerToClientMessage) serverIn.readObject();
+			return (ServerToClientMessage) serverIn.readObject();
 		} catch (ClassNotFoundException e) {
-			result = null;
+			return null;
 		}
-
-		return result;
 	}
 
-	public void writeClientToServerMessage (int server, ClientToServerFactorMessage message) throws IOException {
+	public void writeClientToServerMessage (int server, FactorMessage message) throws IOException {
 		final ObjectOutputStream serverOut = new ObjectOutputStream(servers.get(server).getOutputStream());
 
 		serverOut.writeObject(message);
 	}
 
 	public boolean writeUserFactoringResult (ClientToUserMessage message) {
-		final StringBuilder b = new StringBuilder();
-		final List<BigInteger> factors = message.getFactors();
-
-		b.append(message.getProduct())
-				.append(CONST_PROT_SPACE + CONST_PROT_EQUALS + CONST_PROT_SPACE);
-
-		if (factors.size() >= 1) {
-			b.append(factors.get(0));
-
-			for (int i = 1; i < factors.size(); i++) {
-				b.append(CONST_PROT_SPACE)
-				.append(CONST_PROT_MULT)
-				.append(CONST_PROT_SPACE)
-				.append(factors.get(i));
-			}
-		}
-
-		b.append(CONST_PROT_NEWLINE);
-
-		return writeUser(b.toString());
+		//This method previously contained what is now in the ClientToUserMessage.toString() method.
+		//TO-DO Check the refactoring works well.
+		return writeUser(message.toString());
 	}
 
 	public String readUserRaw () {
@@ -149,8 +128,10 @@ public class PrimeFactorsClient {
 	public static void main (String[] args) throws IOException {
 		final PrimeFactorsClient client;
 
-		ClientToServerFactorMessage serverOutMessage;
-		ServerToClientMessage serverInMessage;
+		FactorMessage serverOutMessage;
+		ClientToServerMessage.SpawnMessage serverOutSpawnMessage;
+		List<FactorMessage> serverOutMessages;
+		ServerToClientMessage.SpawnMessage serverInSpawnMessage;
 		ClientToUserMessage userOutMessage;
 		String userInMessage;
 
@@ -159,18 +140,32 @@ public class PrimeFactorsClient {
 
 			do {
 				client.writeUser(CONST_USER_INPUT);
+				//TO-DO The task of interpreting the user input and checking
+				//its validity may be incapsulated into a UserToClientMessage.
 				userInMessage = client.readUserFiltered();
 
 				if (userInMessage != null && client.isFilteredUserInputValid(userInMessage)) {
-					serverOutMessage = new ClientToServerFactorMessage(
+					serverOutMessage = new FactorMessage(
 							new BigInteger(userInMessage),
-							CONST_MIN_LOW_BOUND,
+							FactorMessage.CONST_MIN_LOW_BOUND,
 							BigMath.sqrt(new BigInteger(userInMessage).add(BigInteger.ONE))
 					);
 					userOutMessage = new ClientToUserMessage(new BigInteger(userInMessage));
 					serverOutMessages = serverOutMessage.partition();
+					serverOutSpawnMessage = new ClientToServerMessage.SpawnMessage(serverOutMessages.size());
+
+					writeSpawnMessage(serverOutSpawnMessage);
+
+					for (int server = 0; server < serverOutSpawnMessage.getServersNumber(); server++) {
+						serverInSpawnMessage = readServerToClientMessage();
+
+						/*
+						Now that we have a server to assign a partition to factor, we:
+							* Invoke a new thread in which to handle the communication between that server and the client;
+						 */
+					}
 				}
-			} while (userInMessage != null);
+			} while (userInMessage != null); //Until the user input is valid
 
 			client.close();
 		} else {

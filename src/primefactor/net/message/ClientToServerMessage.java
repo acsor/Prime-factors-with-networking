@@ -13,6 +13,7 @@ public abstract class ClientToServerMessage extends Message {
 
 		public static final BigInteger CONST_MIN_N = BigInteger.valueOf(2);
 		public static final BigInteger CONST_MIN_LOW_BOUND = BigInteger.valueOf(2);
+		public static final int CONST_DEFAULT_PARTITIONS = 5;
 
 		public static final String CONST_PROT_FACTOR = "factor";
 
@@ -54,6 +55,24 @@ public abstract class ClientToServerMessage extends Message {
 			return high;
 		}
 
+		/**
+		 * A variant of partition(int slots) automating the choice of the slots parameter.
+		 * @return return value of partition(int slots).
+		 */
+		public List<FactorMessage> partition () {
+			if (high.subtract(low).compareTo(BigInteger.valueOf(CONST_DEFAULT_PARTITIONS)) >= 1) {
+				return partition(CONST_DEFAULT_PARTITIONS);
+			}
+			return partition(1);
+		}
+
+		/**
+		 * Utility method to split a FactorMessage instance into multiple parts. Each of these is supposed to be passed
+		 * to a PrimeFactorServer for parallel processing.
+		 * @param slots number of FactorMessage partitions to divide the current instance in.
+		 * @return a list of FactorMessage instances each comprising a range of the number n to be factored by a server
+		 * in a thread of its own.
+		 */
 		public List<FactorMessage> partition (int slots) {
 			final LinkedList<FactorMessage> result = new LinkedList<>();
 			final BigInteger width, remainder;
