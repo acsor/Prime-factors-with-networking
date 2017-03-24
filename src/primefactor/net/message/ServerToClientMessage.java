@@ -108,6 +108,14 @@ public abstract class ServerToClientMessage extends Message {
 			return serverPort;
 		}
 
+		@Override
+		public String toString () {
+			return String.format(
+					"%s at port %d",
+					SpawnMessage.class.getSimpleName(), serverPort
+			);
+		}
+
 	}
 
 }

@@ -1,7 +1,9 @@
 package primefactor.net;
 
+import primefactor.net.message.ClientToServerMessage;
 import primefactor.net.message.ClientToServerMessage.FactorMessage;
 import primefactor.net.message.ServerToClientMessage;
+import primefactor.net.message.ServerToClientMessage.DoneMessage;
 import primefactor.util.BigMath;
 
 import java.io.EOFException;
@@ -11,6 +13,7 @@ import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.net.Socket;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * PrimeFactorsServer performs the "server-side" algorithm
@@ -28,7 +31,7 @@ import java.util.List;
  * factored and the range of values this server will be processing over.
  * Your server will take this in and message back all primefactor for our value.
  */
-public class PrimeFactorsServer extends BaseServer {
+public class PrimeFactorsServer extends BaseServer implements Callable<DoneMessage> {
 
 	public static final int CONST_DEF_PORT = 4444;
 
@@ -56,12 +59,21 @@ public class PrimeFactorsServer extends BaseServer {
 
 	public FactorMessage readClientFactorMessage () throws IOException, ClassNotFoundException {
 		final ObjectInputStream clientIn = new ObjectInputStream(client.getInputStream());
+		final ClientToServerMessage result = (ClientToServerMessage) clientIn.readObject();
 
-		return (FactorMessage) clientIn.readObject();
+		if (logEnabled) {
+			log(result.toString());
+		}
+
+		return (FactorMessage) result;
 	}
 
 	public void writeMessage (ServerToClientMessage message) throws IOException {
 		final ObjectOutputStream clientOut = new ObjectOutputStream(client.getOutputStream());
+
+		if (logEnabled) {
+			log(message.toString());
+		}
 
 		clientOut.writeObject(message);
 	}
@@ -87,10 +99,6 @@ public class PrimeFactorsServer extends BaseServer {
 	 */
 	public static void main (String[] args) throws IOException {
 		final PrimeFactorsServer server;
-		FactorMessage inMessage = null;
-		ServerToClientMessage outMessage;
-		List<BigInteger> primes;
-		boolean isClientMessageValid;
 
 		if (args.length > 0) {
 			server = new PrimeFactorsServer(parsePort(args[0], CONST_DEF_PORT), true);
@@ -99,48 +107,70 @@ public class PrimeFactorsServer extends BaseServer {
 		}
 
 		while (true) {
-			server.nextClient();
+			try {
+				server.call();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-			do {
-				try {
-					inMessage = server.readClientFactorMessage();
-					isClientMessageValid = true;
-				} catch (ClassNotFoundException e) {
-					server.writeMessage(
-							new ServerToClientMessage.InvalidMessage()
-					);
-					isClientMessageValid = false;
-				} catch (EOFException e) {
-					isClientMessageValid = false;
-					break; //Break the do-while loop this catch statement is contained in.
-				}
-			} while (!isClientMessageValid);
+	/**
+	 * Starts a communication with a {@link PrimeFactorsClient} reporting errors or returning a DoneMessage in case of
+	 * success.
+	 * @return a DoneMessage instance if the communication was without errors, null otherwise.
+	 * @throws Exception no exceptions are currently thrown.
+	 */
+	@Override
+	public DoneMessage call () throws Exception {
+		FactorMessage inMessage = null;
+		ServerToClientMessage outMessage = null;
+		List<BigInteger> primes;
+		boolean isClientMessageValid;
 
-			if (isClientMessageValid) {
-				primes = BigMath.primeFactorsOf(
-						inMessage.getN(),
-						inMessage.getLowBound(),
-						inMessage.getHighBound()
+		nextClient();
+
+		do {
+			try {
+				inMessage = readClientFactorMessage();
+				isClientMessageValid = true;
+			} catch (ClassNotFoundException e) {
+				writeMessage(
+						new ServerToClientMessage.InvalidMessage()
 				);
+				isClientMessageValid = false;
+			} catch (EOFException e) {
+				isClientMessageValid = false;
+				break; //Break the do-while loop this catch statement is contained in.
+			}
+		} while (!isClientMessageValid);
 
-				for (BigInteger prime: primes) {
-					outMessage = new ServerToClientMessage.FoundMessage(
-							inMessage.getN(),
-							prime
-					);
-					server.writeMessage(outMessage);
-				}
+		if (isClientMessageValid) {
+			primes = BigMath.primeFactorsOf(
+					inMessage.getN(),
+					inMessage.getLowBound(),
+					inMessage.getHighBound()
+			);
 
-				outMessage = new ServerToClientMessage.DoneMessage(
+			for (BigInteger prime: primes) {
+				outMessage = new ServerToClientMessage.FoundMessage(
 						inMessage.getN(),
-						inMessage.getLowBound(),
-						inMessage.getHighBound()
+						prime
 				);
-				server.writeMessage(outMessage);
+				writeMessage(outMessage);
 			}
 
-			server.closeClient();
+			outMessage = new DoneMessage(
+					inMessage.getN(),
+					inMessage.getLowBound(),
+					inMessage.getHighBound()
+			);
+			writeMessage(outMessage);
 		}
+
+		closeClient();
+
+		return (DoneMessage) outMessage;
 	}
 
 }

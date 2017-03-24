@@ -105,9 +105,11 @@ public class PrimeFactorsClient {
 		ClientToServerMessage.SpawnMessage serverOutSpawnMessage;
 		List<FactorMessage> serverOutMessages;
 		ServerToClientMessage.SpawnMessage serverInSpawnMessage;
+
 		ClientToUserMessage userOutMessage;
 		UserToClientMessage.FactorMessage userInMessage;
 
+		/*
 		if (args.length > 0) {
 			client = PrimeFactorsClient.clientFactory(args[0]);
 
@@ -133,7 +135,7 @@ public class PrimeFactorsClient {
 						/*
 						Now that we have a server to assign a partition to factor, we:
 							* Invoke a new thread in which to handle the communication between that server and the client;
-						 */
+						 * /
 					}
 				}
 			} while (userInMessage != null); //Until the user input is valid
@@ -143,6 +145,7 @@ public class PrimeFactorsClient {
 			System.err.format("%s: <server:port>\n", PrimeFactorsClient.class.getSimpleName());
 			System.exit(1);
 		}
+		*/
 	}
 
 }

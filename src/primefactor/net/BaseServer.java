@@ -88,7 +88,7 @@ public abstract class BaseServer implements Closeable {
 	 */
 	protected abstract void onCloseClient() throws IOException;
 
-	protected void log (String output) {
+	protected final void log (String output) {
 		System.out.format(
 				"[%s] %s\n", new Date(System.currentTimeMillis()), String.valueOf(output)
 		);

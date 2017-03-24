@@ -143,6 +143,14 @@ public abstract class ClientToServerMessage extends Message {
 			return serversNumber;
 		}
 
+		@Override
+		public String toString () {
+			return String.format(
+					"%s, %d servers",
+					SpawnMessage.class.getSimpleName(), serversNumber
+			);
+		}
+
 	}
 
 }
