@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by n0ne on 23/03/17.
@@ -46,7 +47,7 @@ public final class MasterServer extends BaseServer {
 		final ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
 
 		if (logEnabled) {
-			log(message.toString());
+			log("[writeMessage] " + message.toString());
 		}
 
 		out.writeObject(message);
@@ -55,7 +56,7 @@ public final class MasterServer extends BaseServer {
 	public static PrimeFactorsServer primeFactorsServerFactory (int port, boolean logEnabled) {
 		PrimeFactorsServer result = null;
 
-		for (int i = 0; i < CONST_MAX_PORT_TRIES || result == null; i++) {
+		for (int i = 0; i < CONST_MAX_PORT_TRIES && result == null; i++) {
 			try {
 				result = new PrimeFactorsServer(port + i, logEnabled);
 			} catch (IOException e) {
@@ -86,7 +87,7 @@ public final class MasterServer extends BaseServer {
 
 	}
 
-	public static void main (String[] args) throws IOException {
+	public static void main (String[] args) throws Exception {
 		final MasterServer server;
 		List<PrimeFactorsServer> workerServers = new LinkedList<>();
 		ThreadPoolExecutor threadPool;
@@ -114,9 +115,14 @@ public final class MasterServer extends BaseServer {
 			for (int i = 0; i < inMessage.getServersNumber(); i++) {
 				workerServers.add(primeFactorsServerFactory(PrimeFactorsServer.CONST_DEF_PORT, server.logEnabled));
 				threadPool.submit(workerServers.get(workerServers.size() - 1));
-				outMessage = new SpawnMessage(workerServers.get(workerServers.size() - 1).connection.getLocalPort());
+				outMessage = new SpawnMessage(
+						workerServers.get(workerServers.size() - 1).connection.getInetAddress(),
+						workerServers.get(workerServers.size() - 1).connection.getLocalPort()
+				);
 				server.writeMessage(outMessage);
 			}
+
+			threadPool.awaitTermination(10, TimeUnit.SECONDS);
 
 			server.closeClient();
 		}

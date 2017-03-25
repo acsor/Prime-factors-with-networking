@@ -2,6 +2,7 @@ package primefactor.net.message;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,16 +14,16 @@ public class ClientToUserMessage extends Message {
 	private static final String CONST_PROT_EQUALS = "=";
 	private static final String CONST_PROT_MULT = "*";
 
-	private BigInteger product;
+	private BigInteger n;
 	private List<BigInteger> factors;
 
-	public ClientToUserMessage (BigInteger product, BigInteger... factors) {
-		this.product = product;
+	public ClientToUserMessage (BigInteger n, BigInteger... factors) {
+		this.n = n;
 		this.factors = new LinkedList<>(Arrays.asList(factors));
 	}
 
-	public BigInteger getProduct () {
-		return product;
+	public BigInteger getN () {
+		return n;
 	}
 
 	public List<BigInteger> getFactors () {
@@ -33,11 +34,15 @@ public class ClientToUserMessage extends Message {
 		return factors.add(factor);
 	}
 
+	public boolean addFactors (Collection<BigInteger> factors) {
+		return this.factors.addAll(factors);
+	}
+
 	@Override
 	public String toString () {
 		final StringBuilder b = new StringBuilder();
 
-		b.append(product)
+		b.append(n)
 				.append(CONST_PROT_SPACE + CONST_PROT_EQUALS + CONST_PROT_SPACE);
 
 		if (factors.size() >= 1) {

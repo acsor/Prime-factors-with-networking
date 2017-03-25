@@ -30,6 +30,10 @@ public class BigMath {
 	}
 
 	public static List<BigInteger> primeFactorsOf (BigInteger n, BigInteger low, BigInteger high) {
+		return primeFactorsOf(n, low, high, CONST_PRIME_PROBABILITY);
+	}
+
+	public static List<BigInteger> primeFactorsOf (BigInteger n, BigInteger low, BigInteger high, int primeCertainty) {
 		final List<BigInteger> factors = new LinkedList<>();
 
 		if (n.compareTo(new BigInteger("2")) == -1) {
@@ -45,7 +49,7 @@ public class BigMath {
 		}
 
 		for (BigInteger divisor = low; divisor.compareTo(high) < 1; divisor = divisor.add(BigInteger.ONE)) {
-			if (divisor.isProbablePrime(CONST_PRIME_PROBABILITY)) {
+			if (divisor.isProbablePrime(primeCertainty)) {
 				while (n.remainder(divisor).compareTo(BigInteger.ZERO) == 0) {
 					n = n.divide(divisor);
 					factors.add(divisor);
@@ -53,9 +57,10 @@ public class BigMath {
 			}
 		}
 
-		if (n.compareTo(BigInteger.ONE) == 1) {
-			factors.add(n);
-		}
+		//TO-DO This code doesn't produce the expected result. Analyze and correct it.
+		//if (n.compareTo(BigInteger.ONE) == 1) {
+		//	factors.add(n);
+		//}
 
 		return factors;
 	}

@@ -1,6 +1,7 @@
 package primefactor.net.message;
 
 import java.math.BigInteger;
+import java.net.InetAddress;
 
 /**
  * Created by n0ne on 16/03/17.
@@ -98,21 +99,27 @@ public abstract class ServerToClientMessage extends Message {
 
 	public static class SpawnMessage extends ServerToClientMessage {
 
-		private int serverPort;
+		private InetAddress address;
+		private int port;
 
-		public SpawnMessage (int serverPort) {
-			this.serverPort = serverPort;
+		public SpawnMessage (final InetAddress address, int port) {
+			this.address = address;
+			this.port = port;
 		}
 
-		public int getServerPort () {
-			return serverPort;
+		public InetAddress getAddress () {
+			return address;
+		}
+
+		public int getPort () {
+			return port;
 		}
 
 		@Override
 		public String toString () {
 			return String.format(
 					"%s at port %d",
-					SpawnMessage.class.getSimpleName(), serverPort
+					address.toString(), port
 			);
 		}
 

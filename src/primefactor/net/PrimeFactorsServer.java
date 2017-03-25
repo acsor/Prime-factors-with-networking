@@ -34,11 +34,13 @@ import java.util.concurrent.Callable;
 public class PrimeFactorsServer extends BaseServer implements Callable<DoneMessage> {
 
 	public static final int CONST_DEF_PORT = 4444;
-
 	/**
 	 * Certainty variable for BigInteger isProbablePrime() function.
 	 */
 	private final static int CONST_PRIME_CERTAINTY = 10;
+
+	private ObjectInputStream in;
+	private ObjectOutputStream out;
 
 	public PrimeFactorsServer (boolean logEnabled) throws IOException {
 		this(CONST_DEF_PORT, logEnabled);
@@ -50,6 +52,8 @@ public class PrimeFactorsServer extends BaseServer implements Callable<DoneMessa
 
 	@Override
 	protected void onNextClient (Socket client) throws IOException {
+		out = new ObjectOutputStream(client.getOutputStream());
+		in = new ObjectInputStream(client.getInputStream());
 	}
 
 	@Override
@@ -58,8 +62,7 @@ public class PrimeFactorsServer extends BaseServer implements Callable<DoneMessa
 	}
 
 	public FactorMessage readClientFactorMessage () throws IOException, ClassNotFoundException {
-		final ObjectInputStream clientIn = new ObjectInputStream(client.getInputStream());
-		final ClientToServerMessage result = (ClientToServerMessage) clientIn.readObject();
+		final ClientToServerMessage result = (ClientToServerMessage) in.readObject();
 
 		if (logEnabled) {
 			log(result.toString());
@@ -69,13 +72,11 @@ public class PrimeFactorsServer extends BaseServer implements Callable<DoneMessa
 	}
 
 	public void writeMessage (ServerToClientMessage message) throws IOException {
-		final ObjectOutputStream clientOut = new ObjectOutputStream(client.getOutputStream());
-
 		if (logEnabled) {
 			log(message.toString());
 		}
 
-		clientOut.writeObject(message);
+		out.writeObject(message);
 	}
 
 	@Override
@@ -90,6 +91,65 @@ public class PrimeFactorsServer extends BaseServer implements Callable<DoneMessa
 
 	@Override
 	protected void onCloseClient () throws IOException {
+		out.close();
+		in.close();
+	}
+
+	/**
+	 * Starts a communication with a {@link MasterClient} reporting errors or returning a DoneMessage in case of
+	 * success.
+	 * @return a DoneMessage instance if the communication was without errors, null otherwise.
+	 * @throws Exception no exceptions are currently thrown.
+	 */
+	@Override
+	public DoneMessage call () throws Exception {
+		FactorMessage inMessage = null;
+		ServerToClientMessage outMessage = null;
+		List<BigInteger> primes;
+		boolean isClientMessageValid;
+
+		nextClient();
+
+		do {
+			try {
+				inMessage = readClientFactorMessage();
+				isClientMessageValid = true;
+			} catch (ClassNotFoundException e) {
+				writeMessage(new ServerToClientMessage.InvalidMessage());
+				isClientMessageValid = false;
+			} catch (EOFException e) {
+				isClientMessageValid = false;
+				break; //Break the do-while loop this catch statement is contained in.
+			}
+		} while (!isClientMessageValid);
+
+		if (isClientMessageValid) {
+			primes = BigMath.primeFactorsOf(
+					inMessage.getN(),
+					inMessage.getLowBound(),
+					inMessage.getHighBound(),
+					CONST_PRIME_CERTAINTY
+			);
+
+			for (BigInteger prime: primes) {
+				outMessage = new ServerToClientMessage.FoundMessage(
+						inMessage.getN(),
+						prime
+				);
+				writeMessage(outMessage);
+			}
+
+			outMessage = new DoneMessage(
+					inMessage.getN(),
+					inMessage.getLowBound(),
+					inMessage.getHighBound()
+			);
+			writeMessage(outMessage);
+		}
+
+		closeClient();
+
+		return (DoneMessage) outMessage;
 	}
 
 	/**
@@ -113,64 +173,6 @@ public class PrimeFactorsServer extends BaseServer implements Callable<DoneMessa
 				e.printStackTrace();
 			}
 		}
-	}
-
-	/**
-	 * Starts a communication with a {@link PrimeFactorsClient} reporting errors or returning a DoneMessage in case of
-	 * success.
-	 * @return a DoneMessage instance if the communication was without errors, null otherwise.
-	 * @throws Exception no exceptions are currently thrown.
-	 */
-	@Override
-	public DoneMessage call () throws Exception {
-		FactorMessage inMessage = null;
-		ServerToClientMessage outMessage = null;
-		List<BigInteger> primes;
-		boolean isClientMessageValid;
-
-		nextClient();
-
-		do {
-			try {
-				inMessage = readClientFactorMessage();
-				isClientMessageValid = true;
-			} catch (ClassNotFoundException e) {
-				writeMessage(
-						new ServerToClientMessage.InvalidMessage()
-				);
-				isClientMessageValid = false;
-			} catch (EOFException e) {
-				isClientMessageValid = false;
-				break; //Break the do-while loop this catch statement is contained in.
-			}
-		} while (!isClientMessageValid);
-
-		if (isClientMessageValid) {
-			primes = BigMath.primeFactorsOf(
-					inMessage.getN(),
-					inMessage.getLowBound(),
-					inMessage.getHighBound()
-			);
-
-			for (BigInteger prime: primes) {
-				outMessage = new ServerToClientMessage.FoundMessage(
-						inMessage.getN(),
-						prime
-				);
-				writeMessage(outMessage);
-			}
-
-			outMessage = new DoneMessage(
-					inMessage.getN(),
-					inMessage.getLowBound(),
-					inMessage.getHighBound()
-			);
-			writeMessage(outMessage);
-		}
-
-		closeClient();
-
-		return (DoneMessage) outMessage;
 	}
 
 }

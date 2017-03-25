@@ -8,7 +8,7 @@ import java.util.Scanner;
 /**
  * A simple echo client that will interact with an EchoServer.
  */
-public class EchoClient extends BaseClient {
+public class EchoClient extends BaseUserClient {
 
 	protected Scanner serverIn;
 	protected PrintStream serverOut;

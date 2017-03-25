@@ -19,4 +19,4 @@ The extension will provide:
     has been assigned;
     3. A new server implementation (either within PrimeFactorServer, or a new class) with the aim of starting the
     number of servers required;
-    4. An extension of the current PrimeFactorsClient class to allow connecting to a multiplicity of servers.
+    4. An extension of the current PrimeFactorsClient class to allow connecting to multiple PrimeFactorServers.
