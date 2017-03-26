@@ -18,7 +18,6 @@ public abstract class UserToClientMessage extends Message {
 		 * @param n BigInteger to factor; must be n >= CONST_INPUT_MIN_VALID.
 		 */
 		public FactorMessage (BigInteger n) {
-			//TO-DO This class wasn't tested. Do it in some way.
 			this.n = n;
 
 			if (!checkRepresentation()) {

@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a3a9464-192a-4e30-be66-9ff57bd5d516" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/primefactor/net/MasterClient.java" afterPath="$PROJECT_DIR$/src/primefactor/net/MasterClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/primefactor/net/PrimeFactorsServer.java" afterPath="$PROJECT_DIR$/src/primefactor/net/PrimeFactorsServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/primefactor/test/BigMathTest.java" afterPath="$PROJECT_DIR$/src/primefactor/test/BigMathTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/primefactor/util/BigMath.java" afterPath="$PROJECT_DIR$/src/primefactor/util/BigMath.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/primefactor/net/message/UserToClientMessage.java" afterPath="$PROJECT_DIR$/src/primefactor/net/message/UserToClientMessage.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,76 +41,60 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrimeFactorsServer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/primefactor/net/PrimeFactorsServer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="157" column="27" lean-forward="false" selection-start-line="157" selection-start-column="27" selection-end-line="157" selection-end-column="27" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="docComment;field#CONST_PRIME_CERTAINTY#0;class#PrimeFactorsServer#0" expanded="true" />
-                <element signature="method#PrimeFactorsServer#0;class#PrimeFactorsServer#0" expanded="true" />
-                <element signature="method#PrimeFactorsServer#1;class#PrimeFactorsServer#0" expanded="true" />
-                <element signature="method#onNextClient#0;class#PrimeFactorsServer#0" expanded="true" />
-                <element signature="method#readClientFactorMessage#0;class#PrimeFactorsServer#0" expanded="true" />
-                <element signature="method#writeMessage#0;class#PrimeFactorsServer#0" expanded="true" />
-                <element signature="method#writeMessage#1;class#PrimeFactorsServer#0" expanded="true" />
-                <element signature="method#onCloseClient#0;class#PrimeFactorsServer#0" expanded="true" />
-                <element signature="docComment;method#call#0;class#PrimeFactorsServer#0" expanded="true" />
-                <element signature="method#call#0;class#PrimeFactorsServer#0" expanded="true" />
-                <element signature="method#main#0;class#PrimeFactorsServer#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BigMath.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/primefactor/util/BigMath.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="37" column="86" lean-forward="false" selection-start-line="37" selection-start-column="86" selection-end-line="37" selection-end-column="86" />
-              <folding>
-                <element signature="method#primeFactorsOf#0;class#BigMath#0" expanded="true" />
-                <element signature="docComment;method#primeFactorsOf#2;class#BigMath#0" expanded="true" />
-                <element signature="method#multiply#0;class#BigMath#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MasterClient.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MasterClient.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/primefactor/net/MasterClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-78">
-              <caret line="100" column="10" lean-forward="false" selection-start-line="100" selection-start-column="10" selection-end-line="100" selection-end-column="10" />
+            <state relative-caret-position="-468">
+              <caret line="136" column="0" lean-forward="true" selection-start-line="136" selection-start-column="0" selection-end-line="136" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;class#MasterClient#0" expanded="true" />
                 <element signature="method#MasterClient#0;class#MasterClient#0" expanded="true" />
                 <element signature="method#writeSpawnMessage#0;class#MasterClient#0" expanded="true" />
                 <element signature="method#readSpawnMessage#0;class#MasterClient#0" expanded="true" />
-                <element signature="method#writeUserFactoringResult#0;class#MasterClient#0" expanded="true" />
+                <element signature="e#2483#2484#0" expanded="true" />
+                <element signature="e#2526#2527#0" expanded="true" />
                 <element signature="method#readUserRaw#0;class#MasterClient#0" expanded="true" />
                 <element signature="method#writeUser#0;class#MasterClient#0" expanded="true" />
                 <element signature="method#close#0;class#MasterClient#0" expanded="true" />
+                <element signature="docComment;method#computeFinalMessage#0;class#MasterClient#0" expanded="true" />
                 <element signature="method#computeFinalMessage#0;class#MasterClient#0" expanded="true" />
                 <element signature="docComment;method#main#0;class#MasterClient#0" expanded="true" />
-                <element signature="method#main#0;class#MasterClient#0" expanded="true" />
                 <element signature="class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
                 <element signature="method#PrimeFactorsClient#0;class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
                 <element signature="method#call#0;class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
                 <element signature="method#Result#0;class#Result#0;class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
-                <element signature="e#8377#8378#0" expanded="true" />
-                <element signature="e#8396#8397#0" expanded="true" />
-                <element signature="e#8435#8436#0" expanded="true" />
-                <element signature="e#8456#8457#0" expanded="true" />
-                <element signature="e#8496#8497#0" expanded="true" />
-                <element signature="e#8518#8519#0" expanded="true" />
-                <element signature="e#8562#8563#0" expanded="true" />
-                <element signature="e#8587#8588#0" expanded="true" />
+                <element signature="e#8238#8239#0" expanded="true" />
+                <element signature="e#8257#8258#0" expanded="true" />
+                <element signature="e#8296#8297#0" expanded="true" />
+                <element signature="e#8317#8318#0" expanded="true" />
+                <element signature="e#8357#8358#0" expanded="true" />
+                <element signature="e#8379#8380#0" expanded="true" />
+                <element signature="e#8423#8424#0" expanded="true" />
+                <element signature="e#8448#8449#0" expanded="true" />
                 <element signature="docComment;method#addFactor#0;class#Result#0;class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
-                <element signature="e#8774#8775#0" expanded="true" />
-                <element signature="e#8811#8812#0" expanded="true" />
+                <element signature="e#8635#8636#0" expanded="true" />
+                <element signature="e#8672#8673#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserToClientMessage.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/primefactor/net/message/UserToClientMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="205">
+              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding>
+                <element signature="docComment;class#UserToClientMessage#0" expanded="true" />
+                <element signature="docComment;method#FactorMessage#0;class#FactorMessage#0;class#UserToClientMessage#0" expanded="true" />
+                <element signature="e#671#672#0" expanded="true" />
+                <element signature="e#726#727#0" expanded="true" />
+                <element signature="e#757#758#0" expanded="true" />
+                <element signature="e#774#775#0" expanded="true" />
+                <element signature="method#factorMessageFactory#0;class#FactorMessage#0;class#UserToClientMessage#0" expanded="true" />
+                <element signature="e#1094#1095#0" expanded="true" />
+                <element signature="e#1138#1139#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -166,7 +150,6 @@
         <option value="$PROJECT_DIR$/src/primefactor/net/message/ClientToServerFactorMessage.java" />
         <option value="$PROJECT_DIR$/src/primefactor/test/MessageTest.java" />
         <option value="$PROJECT_DIR$/src/primefactor/net/message/Message.java" />
-        <option value="$PROJECT_DIR$/src/primefactor/net/message/UserToClientMessage.java" />
         <option value="$PROJECT_DIR$/src/primefactor/net/BaseServer.java" />
         <option value="$PROJECT_DIR$/src/primefactor/net/message/ClientToServerMessage.java" />
         <option value="$PROJECT_DIR$/src/primefactor/documentation/multithreading_extension" />
@@ -179,8 +162,9 @@
         <option value="$PROJECT_DIR$/src/primefactor/net/MasterServer.java" />
         <option value="$PROJECT_DIR$/src/primefactor/test/BigMathTest.java" />
         <option value="$PROJECT_DIR$/src/primefactor/net/PrimeFactorsServer.java" />
-        <option value="$PROJECT_DIR$/src/primefactor/net/MasterClient.java" />
         <option value="$PROJECT_DIR$/src/primefactor/util/BigMath.java" />
+        <option value="$PROJECT_DIR$/src/primefactor/net/MasterClient.java" />
+        <option value="$PROJECT_DIR$/src/primefactor/net/message/UserToClientMessage.java" />
       </list>
     </option>
   </component>
@@ -456,7 +440,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="SearchEverywhereHistoryKey" value="Prime&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/PrimeFactorsServer.java&#10;BiMat&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/util/BigMath.java&#10;Logger&#9;PSI&#9;JAVA://java.util.logging.Logger&#10;Log&#9;FILE&#9;jar:///usr/lib/jvm/java-8-oracle/jre/lib/rt.jar!/sun/rmi/runtime/Log.class&#10;TimeUnit&#9;PSI&#9;JAVA://java.util.concurrent.TimeUnit&#10;Address&#9;FILE&#9;jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/net/InetAddress.java&#10;ClientToUser&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/message/ClientToUserMessage.java&#10;Base&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/BaseClient.java&#10;BaseCli&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/BaseClient.java&#10;ServerToC&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/message/ServerToClientMessage.java&#10;MasterS&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/MasterServer.java&#10;PrimeF&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/PrimeFactorsServer.java&#10;Executor&#9;PSI&#9;JAVA://java.util.concurrent.Executor&#10;Callable&#9;FILE&#9;jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/Callable.java&#10;ThreadPoo&#9;PSI&#9;JAVA://java.util.concurrent.ThreadPoolExecutor&#10;Master&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/MasterServer.java&#10;extens&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/documentation/multithreading_extension&#10;Message&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/message/Message.java&#10;Test&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/test/MessageTest.java&#10;ClientToSer&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/message/ClientToServerMessage.java&#10;Clie&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/message/ClientToUserMessage.java&#10;BaseC&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/BaseClient.java&#10;Client&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/PrimeFactorsClient.java&#10;Execu&#9;FILE&#9;jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/ExecutorService.java&#10;ExecutorServ&#9;PSI&#9;JAVA://java.util.concurrent.ExecutorService&#10;Socket&#9;FILE&#9;jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/net/Socket.java&#10;PrimeFac&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/PrimeFactorsClient.java&#10;todo&#9;ACTION&#9;ActivateTODOToolWindow&#10;EchoC&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/EchoClient.java&#10;PrimeFa&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/PrimeFactorsServer.java&#10;EchoSer&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/EchoServer.java&#10;PrimeServer&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/PrimeFactorsServer.java&#10;EchoS&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/EchoServer.java&#10;delete&#9;ACTION&#9;EditorDelete&#10;Echos&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/EchoServer.java&#10;ObjectOutputSt&#9;PSI&#9;JAVA://java.io.ObjectOutputStream&#10;Set&#9;PSI&#9;JAVA://java.util.Set&#10;PrintWriter&#9;PSI&#9;JAVA://java.io.PrintWriter&#10;PrintSTre&#9;PSI&#9;JAVA://java.io.PrintStream&#10;InetAddres&#9;PSI&#9;JAVA://java.net.InetAddress" />
+    <property name="SearchEverywhereHistoryKey" value="todo&#9;ACTION&#9;ActivateTODOToolWindow&#10;Prime&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/PrimeFactorsServer.java&#10;BiMat&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/util/BigMath.java&#10;Logger&#9;PSI&#9;JAVA://java.util.logging.Logger&#10;Log&#9;FILE&#9;jar:///usr/lib/jvm/java-8-oracle/jre/lib/rt.jar!/sun/rmi/runtime/Log.class&#10;TimeUnit&#9;PSI&#9;JAVA://java.util.concurrent.TimeUnit&#10;Address&#9;FILE&#9;jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/net/InetAddress.java&#10;ClientToUser&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/message/ClientToUserMessage.java&#10;Base&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/BaseClient.java&#10;BaseCli&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/BaseClient.java&#10;ServerToC&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/message/ServerToClientMessage.java&#10;MasterS&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/MasterServer.java&#10;PrimeF&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/PrimeFactorsServer.java&#10;Executor&#9;PSI&#9;JAVA://java.util.concurrent.Executor&#10;Callable&#9;FILE&#9;jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/Callable.java&#10;ThreadPoo&#9;PSI&#9;JAVA://java.util.concurrent.ThreadPoolExecutor&#10;Master&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/MasterServer.java&#10;extens&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/documentation/multithreading_extension&#10;Message&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/message/Message.java&#10;Test&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/test/MessageTest.java&#10;ClientToSer&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/message/ClientToServerMessage.java&#10;Clie&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/message/ClientToUserMessage.java&#10;BaseC&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/BaseClient.java&#10;Client&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/PrimeFactorsClient.java&#10;Execu&#9;FILE&#9;jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/ExecutorService.java&#10;ExecutorServ&#9;PSI&#9;JAVA://java.util.concurrent.ExecutorService&#10;Socket&#9;FILE&#9;jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/net/Socket.java&#10;PrimeFac&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/PrimeFactorsClient.java&#10;EchoC&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/EchoClient.java&#10;PrimeFa&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/PrimeFactorsServer.java&#10;EchoSer&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/EchoServer.java&#10;PrimeServer&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/net/PrimeFactorsServer.java&#10;EchoS&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/EchoServer.java&#10;delete&#9;ACTION&#9;EditorDelete&#10;Echos&#9;FILE&#9;file:///home/n0ne/programming/IntelliJIDEA/MIT OCW 6.005/Problem sets/Problem set 5/src/primefactor/EchoServer.java&#10;ObjectOutputSt&#9;PSI&#9;JAVA://java.io.ObjectOutputStream&#10;Set&#9;PSI&#9;JAVA://java.util.Set&#10;PrintWriter&#9;PSI&#9;JAVA://java.io.PrintWriter&#10;PrintSTre&#9;PSI&#9;JAVA://java.io.PrintStream&#10;InetAddres&#9;PSI&#9;JAVA://java.net.InetAddress" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/client" />
   </component>
   <component name="RecentsManager">
@@ -464,7 +448,7 @@
       <recent name="primefactor" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BigMathTest">
+  <component name="RunManager" selected="Application.MasterClient">
     <configuration default="false" name="PrimeFactorsServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -825,11 +809,11 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.BigMathTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.MessageTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.BigMathTest.testPrimeFactorsOf" />
-        <item index="3" class="java.lang.String" itemvalue="Application.PrimeFactorsServer" />
-        <item index="4" class="java.lang.String" itemvalue="Application.MasterServer" />
+        <item index="0" class="java.lang.String" itemvalue="Application.MasterServer" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.BigMathTest" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.MessageTest" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.BigMathTest.testPrimeFactorsOf" />
+        <item index="4" class="java.lang.String" itemvalue="Application.PrimeFactorsServer" />
       </list>
     </recent_temporary>
   </component>
@@ -898,32 +882,33 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="23" width="1368" height="746" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32867885" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39889196" sideWeight="0.5132812" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3578125" sideWeight="0.45542428" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45925927" sideWeight="0.48243046" order="3" side_tool="false" content_ui="tabs" x="0" y="23" width="1366" height="745" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32740742" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32444444" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39889196" sideWeight="0.5132812" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38726208" sideWeight="0.54457575" order="1" side_tool="true" content_ui="tabs" x="104" y="109" width="1166" height="541" />
-      <window_info id="Maven Projects" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6680988" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41185185" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41185185" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329429" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6620499" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.66074073" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38213763" sideWeight="0.52" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3578125" sideWeight="0.45542428" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3254565" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45925927" sideWeight="0.48243046" order="3" side_tool="false" content_ui="tabs" x="0" y="23" width="1366" height="745" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -934,7 +919,6 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930514" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4004193" sideWeight="0.48671874" order="12" side_tool="false" content_ui="tabs" x="0" y="1" width="1280" height="1024" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287037" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3254565" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1160,6 +1144,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding>
+            <element signature="e#392#393#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1167,6 +1154,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="311" column="0" lean-forward="false" selection-start-line="311" selection-start-column="0" selection-end-line="311" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1174,6 +1162,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="127" column="17" lean-forward="false" selection-start-line="127" selection-start-column="17" selection-end-line="127" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1181,6 +1170,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="212" column="4" lean-forward="false" selection-start-line="212" selection-start-column="4" selection-end-line="212" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1191,16 +1181,6 @@
           <folding>
             <element signature="method#BaseServer#0;class#BaseServer#0" expanded="false" />
             <element signature="method#parsePort#0;class#BaseServer#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/primefactor/net/message/UserToClientMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="25" column="102" lean-forward="false" selection-start-line="25" selection-start-column="102" selection-end-line="25" selection-end-column="102" />
-          <folding>
-            <element signature="method#factorMessageFactory#0;class#FactorMessage#0;class#UserToClientMessage#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1310,18 +1290,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="411" column="24" lean-forward="false" selection-start-line="411" selection-start-column="24" selection-end-line="411" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/primefactor/net/message/ClientToUserMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="10" column="2" lean-forward="false" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
           <folding>
-            <element signature="e#727#728#0" expanded="false" />
-            <element signature="e#760#761#0" expanded="false" />
-            <element signature="e#823#824#0" expanded="false" />
-            <element signature="e#865#866#0" expanded="false" />
+            <element signature="method#readStreamHeader#0;class#ObjectInputStream#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1330,27 +1300,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="605">
           <caret line="57" column="17" lean-forward="false" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/primefactor/net/message/ClientToServerMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="24" lean-forward="false" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;class#ClientToServerMessage#0" expanded="false" />
-            <element signature="class#FactorMessage#0;class#ClientToServerMessage#0" expanded="true" />
-            <element signature="method#FactorMessage#0;class#FactorMessage#0;class#ClientToServerMessage#0" expanded="true" />
-            <element signature="method#isValid#0;class#FactorMessage#0;class#ClientToServerMessage#0" expanded="true" />
-            <element signature="docComment;method#partition#0;class#FactorMessage#0;class#ClientToServerMessage#0" expanded="false" />
-            <element signature="method#partition#0;class#FactorMessage#0;class#ClientToServerMessage#0" expanded="true" />
-            <element signature="docComment;method#partition#1;class#FactorMessage#0;class#ClientToServerMessage#0" expanded="false" />
-            <element signature="method#partition#1;class#FactorMessage#0;class#ClientToServerMessage#0" expanded="true" />
-            <element signature="method#toString#0;class#FactorMessage#0;class#ClientToServerMessage#0" expanded="true" />
-            <element signature="class#SpawnMessage#0;class#ClientToServerMessage#0" expanded="true" />
-            <element signature="method#toString#0;class#SpawnMessage#0;class#ClientToServerMessage#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1407,42 +1356,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/primefactor/net/MasterClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-78">
-          <caret line="100" column="10" lean-forward="false" selection-start-line="100" selection-start-column="10" selection-end-line="100" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;class#MasterClient#0" expanded="true" />
-            <element signature="method#MasterClient#0;class#MasterClient#0" expanded="true" />
-            <element signature="method#writeSpawnMessage#0;class#MasterClient#0" expanded="true" />
-            <element signature="method#readSpawnMessage#0;class#MasterClient#0" expanded="true" />
-            <element signature="method#writeUserFactoringResult#0;class#MasterClient#0" expanded="true" />
-            <element signature="method#readUserRaw#0;class#MasterClient#0" expanded="true" />
-            <element signature="method#writeUser#0;class#MasterClient#0" expanded="true" />
-            <element signature="method#close#0;class#MasterClient#0" expanded="true" />
-            <element signature="method#computeFinalMessage#0;class#MasterClient#0" expanded="true" />
-            <element signature="docComment;method#main#0;class#MasterClient#0" expanded="true" />
-            <element signature="method#main#0;class#MasterClient#0" expanded="true" />
-            <element signature="class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
-            <element signature="method#PrimeFactorsClient#0;class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
-            <element signature="method#call#0;class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
-            <element signature="method#Result#0;class#Result#0;class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
-            <element signature="e#8377#8378#0" expanded="true" />
-            <element signature="e#8396#8397#0" expanded="true" />
-            <element signature="e#8435#8436#0" expanded="true" />
-            <element signature="e#8456#8457#0" expanded="true" />
-            <element signature="e#8496#8497#0" expanded="true" />
-            <element signature="e#8518#8519#0" expanded="true" />
-            <element signature="e#8562#8563#0" expanded="true" />
-            <element signature="e#8587#8588#0" expanded="true" />
-            <element signature="docComment;method#addFactor#0;class#Result#0;class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
-            <element signature="e#8774#8775#0" expanded="true" />
-            <element signature="e#8811#8812#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/primefactor/net/PrimeFactorsServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -1466,12 +1379,94 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/primefactor/util/BigMath.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
+        <state relative-caret-position="-378">
           <caret line="37" column="86" lean-forward="false" selection-start-line="37" selection-start-column="86" selection-end-line="37" selection-end-column="86" />
           <folding>
             <element signature="method#primeFactorsOf#0;class#BigMath#0" expanded="true" />
             <element signature="docComment;method#primeFactorsOf#2;class#BigMath#0" expanded="true" />
             <element signature="method#multiply#0;class#BigMath#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/primefactor/net/message/ClientToUserMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-61">
+          <caret line="41" column="18" lean-forward="false" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
+          <folding>
+            <element signature="docComment;class#ClientToUserMessage#0" expanded="true" />
+            <element signature="method#toString#0;class#ClientToUserMessage#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/primefactor/net/message/ClientToServerMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#isValid#0;class#FactorMessage#0;class#ClientToServerMessage#0" expanded="true" />
+            <element signature="method#partition#0;class#FactorMessage#0;class#ClientToServerMessage#0" expanded="true" />
+            <element signature="method#partition#1;class#FactorMessage#0;class#ClientToServerMessage#0" expanded="true" />
+            <element signature="method#toString#0;class#FactorMessage#0;class#ClientToServerMessage#0" expanded="true" />
+            <element signature="class#SpawnMessage#0;class#ClientToServerMessage#0" expanded="true" />
+            <element signature="method#toString#0;class#SpawnMessage#0;class#ClientToServerMessage#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/primefactor/net/message/UserToClientMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="docComment;class#UserToClientMessage#0" expanded="true" />
+            <element signature="docComment;method#FactorMessage#0;class#FactorMessage#0;class#UserToClientMessage#0" expanded="true" />
+            <element signature="e#671#672#0" expanded="true" />
+            <element signature="e#726#727#0" expanded="true" />
+            <element signature="e#757#758#0" expanded="true" />
+            <element signature="e#774#775#0" expanded="true" />
+            <element signature="method#factorMessageFactory#0;class#FactorMessage#0;class#UserToClientMessage#0" expanded="true" />
+            <element signature="e#1094#1095#0" expanded="true" />
+            <element signature="e#1138#1139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/primefactor/net/MasterClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-468">
+          <caret line="136" column="0" lean-forward="true" selection-start-line="136" selection-start-column="0" selection-end-line="136" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#MasterClient#0" expanded="true" />
+            <element signature="method#MasterClient#0;class#MasterClient#0" expanded="true" />
+            <element signature="method#writeSpawnMessage#0;class#MasterClient#0" expanded="true" />
+            <element signature="method#readSpawnMessage#0;class#MasterClient#0" expanded="true" />
+            <element signature="e#2483#2484#0" expanded="true" />
+            <element signature="e#2526#2527#0" expanded="true" />
+            <element signature="method#readUserRaw#0;class#MasterClient#0" expanded="true" />
+            <element signature="method#writeUser#0;class#MasterClient#0" expanded="true" />
+            <element signature="method#close#0;class#MasterClient#0" expanded="true" />
+            <element signature="docComment;method#computeFinalMessage#0;class#MasterClient#0" expanded="true" />
+            <element signature="method#computeFinalMessage#0;class#MasterClient#0" expanded="true" />
+            <element signature="docComment;method#main#0;class#MasterClient#0" expanded="true" />
+            <element signature="class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
+            <element signature="method#PrimeFactorsClient#0;class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
+            <element signature="method#call#0;class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
+            <element signature="method#Result#0;class#Result#0;class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
+            <element signature="e#8238#8239#0" expanded="true" />
+            <element signature="e#8257#8258#0" expanded="true" />
+            <element signature="e#8296#8297#0" expanded="true" />
+            <element signature="e#8317#8318#0" expanded="true" />
+            <element signature="e#8357#8358#0" expanded="true" />
+            <element signature="e#8379#8380#0" expanded="true" />
+            <element signature="e#8423#8424#0" expanded="true" />
+            <element signature="e#8448#8449#0" expanded="true" />
+            <element signature="docComment;method#addFactor#0;class#Result#0;class#PrimeFactorsClient#0;class#MasterClient#0" expanded="true" />
+            <element signature="e#8635#8636#0" expanded="true" />
+            <element signature="e#8672#8673#0" expanded="true" />
           </folding>
         </state>
       </provider>

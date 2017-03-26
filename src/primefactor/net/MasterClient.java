@@ -64,8 +64,6 @@ public class MasterClient implements Closeable {
 	}
 
 	boolean writeUserFactoringResult (ClientToUserMessage message) {
-		//This method previously contained what is now in the ClientToUserMessage.toString() method.
-		//TO-DO Check the refactoring works well.
 		return writeUser(message.toString());
 	}
 
