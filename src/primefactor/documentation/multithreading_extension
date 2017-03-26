@@ -20,3 +20,14 @@ The extension will provide:
     3. A new server implementation (either within PrimeFactorServer, or a new class) with the aim of starting the
     number of servers required;
     4. An extension of the current PrimeFactorsClient class to allow connecting to multiple PrimeFactorServers.
+
+Bug fixes:
+	1. The distribution of the factorization of N across different threads, where N is the number to factor, only finds
+	those prime factors which are lower than sqrt(N)! This means that, once the client has finished communicating with the
+	worker threads, it still doesn't posses knowledge about what prime factors above sqrt(N) are there, whose presence is
+	a real possibility. However, by what I read on the assignment of the problem set, there only seems to be *one* (and no
+	more) integer factor of N greater than sqrt(N). I don't know what theorem proves this, and it would be interesting to find
+	it. What is important, though, it is that if this is true, then it is a duty of the client finding the missing prime factor
+	(if there is any) greater than sqrt(N) once the communication with all the worker threads finished. Practically, this could
+	be accomplished by defining a subroutine taking in the number N and its factors below sqrt(N) and outputting not more than
+	a candidate prime factor.

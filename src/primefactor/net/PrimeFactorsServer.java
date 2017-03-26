@@ -37,7 +37,7 @@ public class PrimeFactorsServer extends BaseServer implements Callable<DoneMessa
 	/**
 	 * Certainty variable for BigInteger isProbablePrime() function.
 	 */
-	private final static int CONST_PRIME_CERTAINTY = 10;
+	public final static int CONST_PRIME_CERTAINTY = 10;
 
 	private ObjectInputStream in;
 	private ObjectOutputStream out;

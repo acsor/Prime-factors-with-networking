@@ -36,7 +36,9 @@ public class MasterClient implements Closeable {
 
 	public static final String CONST_ADDRESS_SEP = ":";
 	public static final String CONST_USER_INPUT = "Unsigned integer to factor: ";
+
 	public static final int CONST_DEFAULT_AWAIT_TIME_SECONDS = 10;
+	public static final int CONST_PRIME_CERTAINTY = PrimeFactorsServer.CONST_PRIME_CERTAINTY;
 
 	private Socket connection;
 
@@ -81,13 +83,44 @@ public class MasterClient implements Closeable {
 		return userOut.checkError();
 	}
 
+	@Override
+	public void close () throws IOException {
+		connection.close();
+	}
+
+	/**
+	 * This method terminates the computation initially carried out across the {@link PrimeFactorsServer}s.
+	 * Factors of N returned by the parallel servers are never greater than sqrt(N), even though
+	 * there may be (at most one) one such factor greater than sqrt(N).
+	 *
+	 * See the file multithreading_extension contained within the documentation/ folder, at point #1 of the
+	 * "bugs" section for more informations.
+	 * @param message message containing the prime factors found from the parallel servers, that is those below or
+	 *                equal to sqrt(N).
+	 * @return the correctly computed message containing all the prime factors of the given BigInteger N.
+	 * @return the message containing the complete list of factors of N.
+	 */
+	private ClientToUserMessage computeFinalMessage (ClientToUserMessage message) {
+		BigInteger n = message.getN();
+
+		for (BigInteger factor: message.getFactors()) {
+			n = n.divide(factor);
+		}
+
+		if (n.isProbablePrime(CONST_PRIME_CERTAINTY) && n.compareTo(BigInteger.ONE) == 1) {
+			message.addFactor(n);
+		}
+
+		return message;
+	}
+
 	/**
 	 * @param args String array containing Program arguments.  Each String indicates a
 	 *             PrimeFactorsServer location in the form "host:port"
 	 *             If no program arguments are inputted, this Client will terminate.
 	 */
 	public static void main (String[] args) throws Exception {
-		final MasterClient client;
+		MasterClient client;
 
 		FactorMessage serverOutMessage;
 		List<FactorMessage> factoringPartitions;
@@ -97,13 +130,13 @@ public class MasterClient implements Closeable {
 		ClientToUserMessage userOutMessage;
 		UserToClientMessage.FactorMessage userInMessage;
 
-		Future[] workerClientsResults;
+		Future<PrimeFactorsClient.Result>[] workerClientsResults;
 		ThreadPoolExecutor threadPool;
 
 		if (args.length > 0) {
-			client = new MasterClient(args[0]);
-
 			do {
+				client = new MasterClient(args[0]);
+
 				client.writeUser(CONST_USER_INPUT);
 				userInMessage = UserToClientMessage.FactorMessage.factorMessageFactory(client.readUserRaw());
 
@@ -125,10 +158,6 @@ public class MasterClient implements Closeable {
 					for (int server = 0; server < serverOutSpawnMessage.getServersNumber(); server++) {
 						serverInSpawnMessage = client.readSpawnMessage();
 
-						/*
-						Now that we have a server to assign a partition to factor, we:
-							* Invoke a new thread in which to handle the communication between that server and the client;
-						 */
 						workerClientsResults[server] = threadPool.submit(
 								new PrimeFactorsClient(
 										serverInSpawnMessage.getAddress(),
@@ -138,28 +167,23 @@ public class MasterClient implements Closeable {
 						);
 					}
 
-					threadPool.awaitTermination(CONST_DEFAULT_AWAIT_TIME_SECONDS, TimeUnit.SECONDS);
+					threadPool.shutdown();
 
 					for (int result = 0; result < workerClientsResults.length; result++) {
-						userOutMessage.addFactors(
-								((PrimeFactorsClient.Result) workerClientsResults[result].get()).getFactors()
-						);
+						userOutMessage.addFactors(workerClientsResults[result].get().getFactors());
 					}
+
+					userOutMessage = client.computeFinalMessage(userOutMessage);
 
 					client.writeUserFactoringResult(userOutMessage);
 				}
-			} while (userInMessage != null); //Until the user input is valid
 
-			client.close();
+				client.close();
+			} while (userInMessage != null); //Until the user input is valid
 		} else {
 			System.err.format("%s: <server:port>\n", MasterClient.class.getSimpleName());
 			System.exit(1);
 		}
-	}
-
-	@Override
-	public void close () throws IOException {
-		connection.close();
 	}
 
 	static class PrimeFactorsClient implements Callable<PrimeFactorsClient.Result> {

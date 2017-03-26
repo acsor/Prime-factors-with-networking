@@ -7,6 +7,7 @@ import java.util.List;
 public class BigMath {
 
 	private static int CONST_PRIME_PROBABILITY = 10;
+	private static BigInteger CONST_MIN_LOW = BigInteger.valueOf(2);
 
 	/**
 	 * Given a BigInteger input n, where n >= 0, returns the largest BigInteger r such that r*r <= n.<br>
@@ -56,11 +57,6 @@ public class BigMath {
 				}
 			}
 		}
-
-		//TO-DO This code doesn't produce the expected result. Analyze and correct it.
-		//if (n.compareTo(BigInteger.ONE) == 1) {
-		//	factors.add(n);
-		//}
 
 		return factors;
 	}

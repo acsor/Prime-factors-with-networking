@@ -4,6 +4,7 @@ import primefactor.net.message.ClientToServerMessage;
 import primefactor.net.message.ServerToClientMessage;
 import primefactor.net.message.ServerToClientMessage.SpawnMessage;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -102,29 +103,33 @@ public final class MasterServer extends BaseServer {
 
 		while (true) {
 			server.nextClient();
-			inMessage = server.readSpawnMessage();
-			/*
-			For as many times as indicated by inMessage:
-				* start a worker server s[i]
-				* reply the client that a server s[i] has been started with an assigned port p[i]
-				* wait for an exit status message from each of the worker servers, act accordingly when receiving it
-					and eventually terminate the server
-			 */
-			threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(inMessage.getServersNumber());
 
-			for (int i = 0; i < inMessage.getServersNumber(); i++) {
-				workerServers.add(primeFactorsServerFactory(PrimeFactorsServer.CONST_DEF_PORT, server.logEnabled));
-				threadPool.submit(workerServers.get(workerServers.size() - 1));
-				outMessage = new SpawnMessage(
-						workerServers.get(workerServers.size() - 1).connection.getInetAddress(),
-						workerServers.get(workerServers.size() - 1).connection.getLocalPort()
-				);
-				server.writeMessage(outMessage);
+			try {
+				inMessage = server.readSpawnMessage();
+				/*
+				For as many times as indicated by inMessage:
+					* start a worker server s[i]
+					* reply the client that a server s[i] has been started with an assigned port p[i]
+					* wait for an exit status message from each of the worker servers, act accordingly when receiving it
+						and eventually terminate the server
+				 */
+				threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(inMessage.getServersNumber());
+
+				for (int i = 0; i < inMessage.getServersNumber(); i++) {
+					workerServers.add(primeFactorsServerFactory(PrimeFactorsServer.CONST_DEF_PORT, server.logEnabled));
+					threadPool.submit(workerServers.get(workerServers.size() - 1));
+					outMessage = new SpawnMessage(
+							workerServers.get(workerServers.size() - 1).connection.getInetAddress(),
+							workerServers.get(workerServers.size() - 1).connection.getLocalPort()
+					);
+					server.writeMessage(outMessage);
+				}
+
+				threadPool.shutdown();
+			} catch (EOFException e) {
+			} finally {
+				server.closeClient();
 			}
-
-			threadPool.awaitTermination(10, TimeUnit.SECONDS);
-
-			server.closeClient();
 		}
 	}
 
