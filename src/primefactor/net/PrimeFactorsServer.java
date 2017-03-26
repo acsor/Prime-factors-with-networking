@@ -99,7 +99,7 @@ public class PrimeFactorsServer extends BaseServer implements Callable<DoneMessa
 	 * Starts a communication with a {@link MasterClient} reporting errors or returning a DoneMessage in case of
 	 * success.
 	 * @return a DoneMessage instance if the communication was without errors, null otherwise.
-	 * @throws Exception no exceptions are currently thrown.
+	 * @throws Exception currently no exceptions are directly thrown.
 	 */
 	@Override
 	public DoneMessage call () throws Exception {

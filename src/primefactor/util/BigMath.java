@@ -1,12 +1,14 @@
 package primefactor.util;
 
 import java.math.BigInteger;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 public class BigMath {
 
-	private static int CONST_PRIME_PROBABILITY = 10;
+	private static int CONST_PRIME_CERTAINTY = 10;
 	private static BigInteger CONST_MIN_LOW = BigInteger.valueOf(2);
 
 	/**
@@ -30,10 +32,49 @@ public class BigMath {
 		return a.subtract(BigInteger.ONE);
 	}
 
-	public static List<BigInteger> primeFactorsOf (BigInteger n, BigInteger low, BigInteger high) {
-		return primeFactorsOf(n, low, high, CONST_PRIME_PROBABILITY);
+	/**
+	 *
+	 * @param n number to factorize.
+	 * @return a list of <i>all</i> the prime factors of n calculated from 2 to sqrt(n).
+	 */
+	public static List<BigInteger> primeFactorsOf (BigInteger n) {
+		final List<BigInteger> result;
+
+		if (n.compareTo(BigInteger.ZERO) == 1 && n.compareTo(BigInteger.valueOf(4)) == -1) { //If is 0 < n <= 3
+			result = new LinkedList<>();
+			result.add(n);
+		} else {
+			result = primeFactorsOf(n, CONST_MIN_LOW, sqrt(n));
+
+			for (BigInteger factor: result) {
+				n = n.divide(factor);
+			}
+
+			if (n.isProbablePrime(CONST_PRIME_CERTAINTY) && n.compareTo(BigInteger.ONE) == 1) {
+				result.add(n);
+			}
+		}
+
+		return result;
 	}
 
+	public static List<BigInteger> primeFactorsOf (BigInteger n, BigInteger low, BigInteger high) {
+		return primeFactorsOf(n, low, high, CONST_PRIME_CERTAINTY);
+	}
+
+	/**
+	 * Computes all the prime factors f of n such that low <= f <= high, for every f.<br>
+	 *
+	 * <b>Note:</b> users should <i>not</i> expect this method to return all the prime factors of n when
+	 * low = 2 and high = sqrt(n), for example. Indeed (see multithreading_extension, bug fixes #1) there is always the possibility that
+	 * one such factor (and no more than one) is greater than sqrt(n). (See also the problem assignment PDF.)
+	 * For computing all the prime factors of a number n, see {@link BigMath#primeFactorsOf(BigInteger)} instead.
+	 * @param n BigInteger to find prime factors for.
+	 * @param low minimum value a factor can take.
+	 * @param high maximum value a factor can take.
+	 * @param primeCertainty parameter to pass to {@link BigInteger#isProbablePrime(int)}.
+	 * @return a list of prime factors of n such that if f belongs to this list, then low <= f <= high.
+	 */
 	public static List<BigInteger> primeFactorsOf (BigInteger n, BigInteger low, BigInteger high, int primeCertainty) {
 		final List<BigInteger> factors = new LinkedList<>();
 
@@ -59,6 +100,21 @@ public class BigMath {
 		}
 
 		return factors;
+	}
+
+	public static BigInteger multiply (Collection<BigInteger> integers) {
+		BigInteger result = BigInteger.ONE;
+		final Iterator<BigInteger> it = integers.iterator();
+
+		if (it.hasNext()) {
+			result = it.next();
+
+			while (it.hasNext()) {
+				result = result.multiply(it.next());
+			}
+		}
+
+		return result;
 	}
 
 }

@@ -89,12 +89,16 @@ public class MasterClient implements Closeable {
 	}
 
 	/**
+	 * <p>
 	 * This method terminates the computation initially carried out across the {@link PrimeFactorsServer}s.
 	 * Factors of N returned by the parallel servers are never greater than sqrt(N), even though
-	 * there may be (at most one) one such factor greater than sqrt(N).
+	 * there may be (at most) one such factor greater than sqrt(N).
+	 * </p>
 	 *
+	 * <p>
 	 * See the file multithreading_extension contained within the documentation/ folder, at point #1 of the
-	 * "bugs" section for more informations.
+	 * "bugs" section for more informations, or read the problem assignment right under "Problem 5: Integrating ...".
+	 * </p>
 	 * @param message message containing the prime factors found from the parallel servers, that is those below or
 	 *                equal to sqrt(N).
 	 * @return the correctly computed message containing all the prime factors of the given BigInteger N.
