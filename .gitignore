@@ -1,3 +1,5 @@
 # Local gitignore rules
+.idea/workspace.xml
+.idea/tools.xml
 /bin
 *.swp
